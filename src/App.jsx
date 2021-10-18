@@ -1,16 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { Navbar } from "./components/elements";
-import { CoverPage } from "./components/pages";
+import { CoverPage, LoginPage } from "./components/pages";
 
 const App = () => {
   return (
     <div className="app">
-      <Navbar />
       <Switch>
-        <Route path="/">
-          <CoverPage />
-        </Route>
+        <Route path="/login" component={LoginPage} />
+        <Route path="/" component={CoverPage} />
       </Switch>
     </div>
   );
