@@ -1,0 +1,17 @@
+.navbar {
+  background-color: var(--theme-color-dark);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.navbar__navlink {
+  color: var(--theme-color-light);
+  text-decoration: none;
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+.navbar__navlink:hover {
+  background-color: var(--theme-color-yellow);
+  /* color: var(--theme-color-dark); */
+}

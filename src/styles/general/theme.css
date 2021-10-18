@@ -1,0 +1,13 @@
+:root {
+  --theme-color-brown: #382615;
+  --theme-color-dark: #2f2f2f;
+  --theme-color-green: #859d3c;
+  --theme-color-light: #eee;
+  --theme-color-orange: #ed732e;
+  --theme-color-red: #9d221e;
+  --theme-color-tan: #996236;
+  --theme-color-yellow: #f8b12c;
+  box-sizing: border-box;
+  font-family: "Cantarell", sans-serif;
+  line-height: 1.4;
+}
