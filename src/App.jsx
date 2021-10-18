@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { CoverPage, LoginPage } from "./components/pages";
+import { LoginContext } from "./contexts";
 
 const App = () => {
+  const { Provider } = LoginContext;
+
+  // If there's a login token saved in localStorage, start app logged-in
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("token") ? true : false
+  );
+
   return (
     <div className="app">
-      <Switch>
-        <Route path="/login" component={LoginPage} />
-        <Route exact path="/" component={CoverPage} />
-      </Switch>
+      <Provider value={{ isLoggedIn, setIsLoggedIn }}>
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route exact path="/" component={CoverPage} />
+        </Switch>
+      </Provider>
     </div>
   );
 };
