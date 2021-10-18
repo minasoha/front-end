@@ -2,5 +2,8 @@
 @import url("./general/reset.css");
 @import url("./general/theme.css");
 
+/* Pages */
+@import url("./pages/CoverPage.css");
+
 /* Elements */
 @import url("./element/Navbar.css");
