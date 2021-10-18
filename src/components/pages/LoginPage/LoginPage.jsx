@@ -1,30 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
-import Signup from "../../forms/signupForm";
-
-const initialFormValues = {
-  email: '',
-  confirmEmail: '',
-  password: '',
-  confirmPassword: '',
-}
+import { SignupForm } from "./../../forms/";
 
 export const LoginPage = () => {
-
-  const [formValues, setFormValues] = useState(initialFormValues);
-
-  const change = (name, value) => {
-    setFormValues({ ...formValues, [name]: value})
-  }
-
-  const submit = () => {
-    const newSignup = {
-      email: formValues.email.trim(),
-      password: formValues.password.trim()
-    }
-    // leading to a POST (i assume!)
-  }
-
   return (
     <section data-testid="login-page" className="login-page">
       <div className="login-page__form-selector">
@@ -47,9 +25,7 @@ export const LoginPage = () => {
         <Route exact path="/login">
           {/* Login Form Component Goes Here */}
         </Route>
-        <Route exact path="/login/signup">
-          <Signup values={formValues} change={change} submit={submit} />
-        </Route>
+        <Route exact path="/login/signup" component={SignupForm} />
       </Switch>
     </section>
   );
