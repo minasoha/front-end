@@ -5,10 +5,18 @@ export const LoginPage = () => {
   return (
     <section data-testid="login-page" className="login-page">
       <div className="login-page__form-selector">
-        <NavLink className="login-page__form-select-button" to="/login/signup">
+        <NavLink
+          data-testid="login-page__signup-button"
+          className="login-page__form-select-button"
+          to="/login/signup"
+        >
           Sign Up
         </NavLink>
-        <NavLink className="login-page__form-select-button" to="/login">
+        <NavLink
+          data-testid="login-page__login-button"
+          className="login-page__form-select-button"
+          to="/login"
+        >
           Log In
         </NavLink>
       </div>
