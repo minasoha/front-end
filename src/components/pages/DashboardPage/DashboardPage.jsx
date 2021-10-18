@@ -12,7 +12,7 @@ const Dashboard = () => {
                 className="cover-page__cta-button"
             > 
 
-                Create new potluck
+                Create New Potluck
 
             </Link>
             <Link 
@@ -20,7 +20,7 @@ const Dashboard = () => {
                 data-testid="cover-page__cta-button"
                 className="cover-page__cta-button"
             >
-                Join potluck
+                Join Potluck
 
             </Link>
 
@@ -29,7 +29,7 @@ const Dashboard = () => {
                 data-testid="cover-page__cta-button"
                 className="cover-page__cta-button">
 
-                View potluck
+                View Potluck
 
             </Link>
         </div>

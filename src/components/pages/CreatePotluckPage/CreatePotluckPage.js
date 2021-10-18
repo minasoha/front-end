@@ -14,28 +14,31 @@ const CreatePotluckPage = () => {
         e.preventDefault();
         push('/dashboard')
     }
+    
     return(
         
             
                 
             
-                <form className="creat-potluck" onSubmit={handleSubmit}>
-                    <h1>Creat Potluck</h1>
-                    <label>
-                        Event Name:
-                        <input type="text" name="event-name" />
-                    </label>
-                    <label>
-                        Location:
-                        <input type="text" name="location" />
-                    </label>
-                    <label>
-                    Date/Time:
-                    <input type="datetime-local" name="dateTime" />
-                    </label>
+        <form className="create-potluck" onSubmit={handleSubmit}>
+            <h1>CreatePotluckPage Potluck</h1>
+            <label>
+                Event Name:
+                <input type="text" name="event-name" />
+            </label>
 
-                    <button onSubmit={handleSubmit} className="cover-page__cta-button">Creat Potluck</button>
-                </form>
+            <label>
+                Location:
+                <input type="text" name="location" />
+            </label>
+
+            <label>
+            Date/Time:
+            <input type="datetime-local" name="dateTime" />
+            </label>
+
+            <button onSubmit={handleSubmit} className="cover-page__cta-button">Creat Potluck</button>
+        </form>
 
             
     
