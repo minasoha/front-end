@@ -8,7 +8,11 @@ export const CoverPage = () => {
       <h2 className="cover-page__subtitle">
         Your one-stop shop for all things potluck.
       </h2>
-      <Link to="/login" className="cover-page__cta-button">
+      <Link
+        to="/login"
+        data-testid="cover-page__cta-button"
+        className="cover-page__cta-button"
+      >
         Get Started
       </Link>
     </section>
