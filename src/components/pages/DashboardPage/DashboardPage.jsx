@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { Popup } from "../JoinPotluckPage/JoinPotluckPage";
 export const DashboardPage = () => {
+  const [popup, setPopup] = useState(false);
+
+  const openPopup = () => {
+    setPopup((popup) => !popup);
+  };
+
   return (
     <section data-testid="dashboard" className="dashboard">
       <h1 className="dashboard__title">Dashboard</h1>
@@ -13,14 +19,14 @@ export const DashboardPage = () => {
       >
         Create New Potluck
       </Link>
-      <Link
-        to="/potluck/join"
+      <button
         data-testid="dashboard__button--join"
         className="button"
+        onClick={openPopup}
       >
         Join Potluck
-      </Link>
-
+      </button>
+      <Popup popup={popup} setPopup={setPopup} />
       {/* The below is placeholder code until we have a working system! */}
 
       <h2 className="dashboard__subtitle">Your Potlucks</h2>
