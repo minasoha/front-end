@@ -1,24 +1,26 @@
 import React from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
 import { SignupForm } from "./../../forms/";
-import CreatePotluckPage from "../CreatePotluckPage/CreatePotluckPage";
 
 export const LoginPage = () => {
   return (
     <section data-testid="login-page" className="login-page">
-      <CreatePotluckPage/>
       <div className="login-page__form-selector">
         <NavLink
           data-testid="login-page__signup-button"
           className="login-page__form-select-button"
+          activeClassName="login-page__form-select-button active"
           to="/login/signup"
+          exact
         >
           Sign Up
         </NavLink>
         <NavLink
           data-testid="login-page__login-button"
           className="login-page__form-select-button"
+          activeClassName="login-page__form-select-button active"
           to="/login"
+          exact
         >
           Log In
         </NavLink>

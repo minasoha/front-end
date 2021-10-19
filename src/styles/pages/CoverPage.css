@@ -14,15 +14,3 @@
 .cover-page__title {
   font-size: 3rem;
 }
-
-.cover-page__cta-button {
-  background-color: var(--theme-color-salmon);
-  color: var(--theme-color-light);
-  padding: 1rem 1.5rem;
-  text-decoration: none;
-  transition: 150ms;
-}
-
-.cover-page__cta-button:hover {
-  background-color: var(--theme-color-dark);
-}
