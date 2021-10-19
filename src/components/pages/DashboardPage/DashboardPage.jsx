@@ -1,39 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
+export const DashboardPage = () => {
+  return (
+    <section data-testid="dashboard" className="dashboard">
+      <Link
+        to="/potluck/create"
+        data-testid="dashboard__button--create"
+        className="button"
+      >
+        Create New Potluck
+      </Link>
+      <Link
+        to="/potluck/join"
+        data-testid="dashboard__button--join"
+        className="button"
+      >
+        Join Potluck
+      </Link>
 
-
-const Dashboard = () => {
-    return(
-        <div data-testid="cover-page" className="cover-page">
-            <Link 
-                to="/newPot"
-                data-testid="cover-page__cta-button"
-                className="cover-page__cta-button"
-            > 
-
-                Create New Potluck
-
-            </Link>
-            <Link 
-                to="/joinPot"
-                data-testid="cover-page__cta-button"
-                className="cover-page__cta-button"
-            >
-                Join Potluck
-
-            </Link>
-
-            <Link 
-                to="/viewPot"
-                data-testid="cover-page__cta-button"
-                className="cover-page__cta-button">
-
-                View Potluck
-
-            </Link>
-        </div>
-    )
+      <Link
+        to="/potluck/view"
+        data-testid="dashboard__button--view"
+        className="button"
+      >
+        View Potluck
+      </Link>
+    </section>
+  );
 };
 
-export default Dashboard;
+export default DashboardPage;

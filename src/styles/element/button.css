@@ -1,0 +1,29 @@
+/* Base Button Styles */
+
+.button {
+  background-color: var(--theme-color-dark);
+  border-radius: 0.5rem;
+  border: 1px solid var(--theme-color-dark);
+  color: var(--theme-color-light);
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: 150ms;
+}
+.button:hover {
+  background-color: var(--theme-color-light);
+  color: var(--theme-color-dark);
+  cursor: pointer;
+}
+
+/* Modifier Styles */
+
+.button--cover {
+  padding: 1rem 1.5rem;
+}
+
+.button--salmon {
+  background-color: var(--theme-color-salmon);
+}
+.button--salmon:hover {
+  background-color: var(--theme-color-dark);
+}

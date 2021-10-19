@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
-import { CoverPage, LoginPage } from "./components/pages";
+import { CoverPage, LoginPage, DashboardPage } from "./components/pages";
 import { LoginContext } from "./contexts";
-
 
 const App = () => {
   const { Provider } = LoginContext;
@@ -15,11 +14,10 @@ const App = () => {
   return (
     <div className="app">
       <Provider value={{ isLoggedIn, setIsLoggedIn }}>
-      
         <Switch>
+          <Route path="/dashboard" component={DashboardPage} />
           <Route path="/login" component={LoginPage} />
           <Route exact path="/" component={CoverPage} />
-          
         </Switch>
       </Provider>
     </div>
