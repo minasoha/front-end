@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export const DashboardPage = () => {
   return (
     <section data-testid="dashboard" className="dashboard">
+      <h1 className="dashboard__title">Dashboard</h1>
       <Link
         to="/potluck/create"
         data-testid="dashboard__button--create"

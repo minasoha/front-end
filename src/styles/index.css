@@ -4,6 +4,7 @@
 
 /* Pages */
 @import url("./pages/CoverPage.css");
+@import url("./pages/DashboardPage.css");
 
 /* Elements */
 @import url("./element/Navbar.css");

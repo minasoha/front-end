@@ -12,7 +12,7 @@ const App = () => {
   );
 
   return (
-    <div className="app">
+    <>
       <Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <Switch>
           <Route path="/dashboard" component={DashboardPage} />
@@ -20,7 +20,7 @@ const App = () => {
           <Route exact path="/" component={CoverPage} />
         </Switch>
       </Provider>
-    </div>
+    </>
   );
 };
 

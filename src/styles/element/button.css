@@ -5,7 +5,9 @@
   border-radius: 0.5rem;
   border: 1px solid var(--theme-color-dark);
   color: var(--theme-color-light);
+  margin: 0.2rem;
   padding: 0.5rem 1rem;
+  text-align: center;
   text-decoration: none;
   transition: 150ms;
 }
@@ -18,6 +20,7 @@
 /* Modifier Styles */
 
 .button--cover {
+  border: none;
   padding: 1rem 1.5rem;
 }
 
@@ -26,4 +29,5 @@
 }
 .button--salmon:hover {
   background-color: var(--theme-color-dark);
+  color: var(--theme-color-light);
 }
