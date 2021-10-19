@@ -5,11 +5,11 @@ const loginSchema = yup.object().shape({
     .string()
     .email("This email address is not valid.")
     .trim()
-    .required(),
+    .required("Email address is required for login."),
   password: yup
     .string()
     .trim()
-    .required()
+    .required("Your password is required for login.")
     .min(4, "Password needs to be at least 4 characters long."),
 });
 

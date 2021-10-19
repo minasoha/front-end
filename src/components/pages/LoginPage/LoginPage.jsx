@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
-import { SignupForm } from "./../../forms/";
+import { SignupForm, LoginForm } from "./../../forms/";
 
 export const LoginPage = () => {
   return (
@@ -27,7 +27,7 @@ export const LoginPage = () => {
       </div>
       <Switch>
         <Route exact path="/login">
-          {/* Login Form Component Goes Here */}
+          <LoginForm />
         </Route>
         <Route exact path="/login/signup" component={SignupForm} />
       </Switch>
