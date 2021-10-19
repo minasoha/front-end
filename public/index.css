@@ -1,0 +1,271 @@
+/* General/Global */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+:root {
+  box-sizing: border-box;
+  font-family: "Cantarell", sans-serif;
+  line-height: 1.4;
+}
+#root {
+  background-color: #f0f7f0;
+  color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.page-title {
+  font-size: 2rem;
+  margin: 1rem;
+  text-align: center;
+}
+/* Pages */
+.cover-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+.cover-page__title,
+.cover-page__subtitle {
+  margin-bottom: 1rem;
+}
+.cover-page__title {
+  font-size: 3rem;
+}
+.dashboard {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem;
+}
+.dashboard__title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.dashboard__subtitle {
+  border-bottom: solid 2px #2f2f2f;
+  font-size: 2rem;
+  margin: 1rem;
+  padding-bottom: 0.4rem;
+}
+/* 'Your Potlucks' Cards */
+.potluck-card {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.login-page__form-selector {
+  margin: 1.5rem 0;
+}
+.login-page__form-select-button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  text-decoration: none;
+  border: solid 1px #2f2f2f;
+  color: #2f2f2f;
+  transition: 150ms;
+}
+.login-page__form-select-button:hover {
+  background-color: lightgray;
+}
+.login-page__form-select-button.active {
+  background-color: #2f2f2f;
+  color: #f0f7f0;
+}
+/* Elements */
+.navbar {
+  background-color: #2f2f2f;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.navbar__navlink {
+  color: #f0f7f0;
+  text-decoration: none;
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  transition: 150ms;
+}
+.navbar__navlink:hover {
+  background-color: #f68882;
+  /* color: @theme-color-dark; */
+}
+/* Base Button Styles */
+.button {
+  background-color: #2f2f2f;
+  border-radius: 0.5rem;
+  border: 1px solid #2f2f2f;
+  color: #f0f7f0;
+  margin: 0.2rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: 150ms;
+}
+.button:hover {
+  background-color: #f0f7f0;
+  color: #2f2f2f;
+  cursor: pointer;
+}
+/* Modifier Styles */
+.button--cover {
+  border: none;
+  padding: 1rem 1.5rem;
+}
+.button--salmon {
+  background-color: #f68882;
+}
+.button--salmon:hover {
+  background-color: #2f2f2f;
+  color: #f0f7f0;
+}
+.form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+}
+.form__label {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  min-width: 400px;
+  padding: 0.3rem;
+}
