@@ -10,3 +10,18 @@
   font-size: 3rem;
   margin-bottom: 1rem;
 }
+
+.dashboard__subtitle {
+  font-size: 2rem;
+  margin: 1rem;
+  border-bottom: solid 2px var(--theme-color-dark);
+  padding-bottom: 0.4rem;
+}
+
+/* 'Your Potlucks' Cards */
+
+.potluck-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

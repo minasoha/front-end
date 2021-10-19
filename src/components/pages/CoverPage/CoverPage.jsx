@@ -15,6 +15,13 @@ export const CoverPage = () => {
       >
         Get Started
       </Link>
+      <Link
+        to="/dashboard"
+        data-testid="cover-page__dev-button"
+        className="button"
+      >
+        [DEV] Dashboard
+      </Link>
     </section>
   );
 };
