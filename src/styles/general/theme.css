@@ -4,6 +4,8 @@
   --theme-color-light: #f0f7f0;
   --theme-color-mint: #c4dfb6;
   --theme-color-salmon: #f68882;
+  --theme-width-desktop: 1000px;
+  --theme-width-mobile: 500px;
   box-sizing: border-box;
   font-family: "Cantarell", sans-serif;
   line-height: 1.4;

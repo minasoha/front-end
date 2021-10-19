@@ -30,52 +30,56 @@ export const SignupForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="emailContainer">
-        <label>
-          Email:
-          <input
-            name="email"
-            value={formValues.email}
-            type="email"
-            placeholder="Enter your email address."
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Confirm Email:
-          <input
-            name="confirmEmail"
-            value={formValues.confirmEmail}
-            type="email"
-            placeholder="Re-enter your email address."
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-      <div className="passwordContainer">
-        <label>
-          Password:
-          <input
-            name="password"
-            value={formValues.password}
-            type="password"
-            placeholder="Create a password."
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Confirm Password:
-          <input
-            name="confirmPassword"
-            value={formValues.confirmPassword}
-            type="password"
-            placeholder="Re-enter your password."
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-      <button id="signupButton">Submit</button>
+    <form className="form" onSubmit={handleSubmit}>
+      <label className="form__label">
+        Email:
+        <input
+          name="email"
+          value={formValues.email}
+          type="email"
+          placeholder="Enter your email address."
+          onChange={handleChange}
+          className="form__text-field"
+        />
+      </label>
+      <label className="form__label">
+        Confirm Email:
+        <input
+          name="confirmEmail"
+          value={formValues.confirmEmail}
+          type="email"
+          placeholder="Re-enter your email address."
+          onChange={handleChange}
+          className="form__text-field"
+        />
+      </label>
+
+      <label className="form__label">
+        Password:
+        <input
+          name="password"
+          value={formValues.password}
+          type="password"
+          placeholder="Create a password."
+          onChange={handleChange}
+          className="form__text-field"
+        />
+      </label>
+      <label className="form__label">
+        Confirm Password:
+        <input
+          name="confirmPassword"
+          value={formValues.confirmPassword}
+          type="password"
+          placeholder="Re-enter your password."
+          onChange={handleChange}
+          className="form__text-field"
+        />
+      </label>
+
+      <button className="button" id="signupButton">
+        Submit
+      </button>
     </form>
   );
 };

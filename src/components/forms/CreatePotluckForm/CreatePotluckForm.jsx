@@ -23,15 +23,15 @@ export const CreatePotluckForm = () => {
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <label>
+      <label className="form__label">
         Event Name:
         <input className="form__text-field" type="text" name="event-name" />
       </label>
-      <label>
+      <label className="form__label">
         Location:
         <input className="form__text-field" type="text" name="location" />
       </label>
-      <label>
+      <label className="form__label">
         Date/Time:
         <input
           className="form__date-field"

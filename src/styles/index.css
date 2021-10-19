@@ -1,6 +1,7 @@
 /* General/Global */
 @import url("./general/reset.css");
 @import url("./general/theme.css");
+@import url("./general/page.css");
 
 /* Pages */
 @import url("./pages/CoverPage.css");
@@ -9,3 +10,4 @@
 /* Elements */
 @import url("./element/Navbar.css");
 @import url("./element/button.css");
+@import url("./element/form.css");
