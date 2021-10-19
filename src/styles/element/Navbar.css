@@ -10,8 +10,9 @@
   padding: 0.5rem 2rem;
   border: none;
   border-radius: 0.5rem;
+  transition: 150ms;
 }
 .navbar__navlink:hover {
-  background-color: var(--theme-color-yellow);
+  background-color: var(--theme-color-salmon);
   /* color: var(--theme-color-dark); */
 }
