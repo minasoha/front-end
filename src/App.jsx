@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
-import { CoverPage, LoginPage, DashboardPage } from "./components/pages";
+import {
+  CoverPage,
+  LoginPage,
+  DashboardPage,
+  CreatePotluckPage,
+} from "./components/pages";
+import { WithNav } from "./components/elements";
 import { LoginContext } from "./contexts";
 
 const App = () => {
@@ -15,7 +21,14 @@ const App = () => {
     <>
       <Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <Switch>
-          <Route path="/dashboard" component={DashboardPage} />
+          <Route
+            path="/potluck/create"
+            component={() => <WithNav component={<CreatePotluckPage />} />}
+          />
+          <Route
+            path="/dashboard"
+            component={() => <WithNav component={<DashboardPage />} />}
+          />
           <Route path="/login" component={LoginPage} />
           <Route exact path="/" component={CoverPage} />
         </Switch>
