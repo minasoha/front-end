@@ -4,8 +4,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 // Components
 import App from "./App";
-// Styles
-import "./styles/index.css";
 
 // Render the frontend (in strict mode w/ SPA Routing + Redux)
 ReactDOM.render(
