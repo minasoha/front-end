@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
-import LoginForm from "../../forms/LoginForm/LoginForm";
-import { SignupForm } from "./../../forms/";
+import { SignupForm, LoginForm } from "./../../forms/";
 
 export const LoginPage = () => {
   return (
