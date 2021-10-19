@@ -1,8 +1,16 @@
 // Libraries
 import React, { useState } from "react";
+import schema from "../../../schemas/signupSchema";
+import * as yup from "yup";
 
 // Initial Form Data
 const initialFormValues = {
+  email: "",
+  confirmEmail: "",
+  password: "",
+  confirmPassword: "",
+};
+const initialFormErrors = {
   email: "",
   confirmEmail: "",
   password: "",
@@ -12,11 +20,20 @@ const initialFormValues = {
 export const SignupForm = () => {
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
-
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  // Validation
+  const validate = (name, value) => {
+    yup
+      .reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]: "" }))
+      .catch((err) => setFormErrors({ ...formErrors, [name]: err.errors[0] }));
+  };
   // Event handlers
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const valueToUse = type === "checkbox" ? checked : value;
+    validate(name, value);
     setFormValues({ ...formValues, [name]: valueToUse });
   };
   const handleSubmit = (e) => {
@@ -31,6 +48,12 @@ export const SignupForm = () => {
 
   return (
     <form className="form" onSubmit={handleSubmit}>
+      <div className="form__errors">
+        <p>{formErrors.email}</p>
+        <p>{formErrors.confirmEmail}</p>
+        <p>{formErrors.password}</p>
+        <p>{formErrors.confirmPassword}</p>
+      </div>
       <label className="form__label">
         Email:
         <input
