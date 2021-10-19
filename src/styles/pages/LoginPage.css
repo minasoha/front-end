@@ -1,0 +1,28 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-page__form-selector {
+  margin: 1.5rem 0;
+}
+
+.login-page__form-select-button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  text-decoration: none;
+  border: solid 1px var(--theme-color-dark);
+  color: var(--theme-color-dark);
+  transition: 150ms;
+}
+.login-page__form-select-button:hover {
+  background-color: lightgray;
+}
+
+.login-page__form-select-button.active {
+  background-color: var(--theme-color-dark);
+  color: var(--theme-color-light);
+}

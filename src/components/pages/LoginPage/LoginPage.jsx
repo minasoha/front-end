@@ -9,14 +9,18 @@ export const LoginPage = () => {
         <NavLink
           data-testid="login-page__signup-button"
           className="login-page__form-select-button"
+          activeClassName="login-page__form-select-button active"
           to="/login/signup"
+          exact
         >
           Sign Up
         </NavLink>
         <NavLink
           data-testid="login-page__login-button"
           className="login-page__form-select-button"
+          activeClassName="login-page__form-select-button active"
           to="/login"
+          exact
         >
           Log In
         </NavLink>
