@@ -1,12 +1,13 @@
 import React from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
+import { SignupForm } from "./../../forms/";
 import CreatePotluckPage from "../CreatePotluckPage/CreatePotluckPage";
+
 export const LoginPage = () => {
   return (
     <section data-testid="login-page" className="login-page">
-      <div className="login-page__form-selector">
-
       <CreatePotluckPage/>
+      <div className="login-page__form-selector">
         <NavLink
           data-testid="login-page__signup-button"
           className="login-page__form-select-button"
@@ -26,9 +27,7 @@ export const LoginPage = () => {
         <Route exact path="/login">
           {/* Login Form Component Goes Here */}
         </Route>
-        <Route exact path="/login/signup">
-          {/* Signup Form Component Goes Here */}
-        </Route>
+        <Route exact path="/login/signup" component={SignupForm} />
       </Switch>
     </section>
   );
