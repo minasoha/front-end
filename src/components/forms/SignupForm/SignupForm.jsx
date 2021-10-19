@@ -1,5 +1,5 @@
 // Libraries
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import schema from "../../../schemas/signupSchema";
 import * as yup from "yup";
 
@@ -16,11 +16,14 @@ const initialFormErrors = {
   password: "",
   confirmPassword: "",
 };
+const initialDisabled = true;
 
 export const SignupForm = () => {
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(initialDisabled);
+
   // Validation
   const validate = (name, value) => {
     yup
@@ -33,8 +36,8 @@ export const SignupForm = () => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const valueToUse = type === "checkbox" ? checked : value;
-    validate(name, value);
     setFormValues({ ...formValues, [name]: valueToUse });
+    validate(name, value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,6 +48,10 @@ export const SignupForm = () => {
     // API CALL SHOULD GO HERE WHEN READY
     console.log("FORM SUBMITTED!", newUserInfo);
   };
+
+  useEffect(() => {
+    schema.isValid(formValues).then((valid) => setDisabled(!valid));
+  }, [formValues]);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -100,7 +107,7 @@ export const SignupForm = () => {
         />
       </label>
 
-      <button className="button" id="signupButton">
+      <button className="button" id="signupButton" disabled={disabled}>
         Submit
       </button>
     </form>

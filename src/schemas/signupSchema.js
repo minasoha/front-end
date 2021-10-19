@@ -11,7 +11,7 @@ const signupSchema = yup.object().shape({
     .email("This email address is not valid.")
     .trim()
     .required()
-    .oneOf([yup.ref("email"), null], "Email addresses do not match."),
+    .oneOf([yup.ref("email"), null], null),
   password: yup
     .string()
     .trim()
@@ -21,7 +21,7 @@ const signupSchema = yup.object().shape({
     .string()
     .trim()
     .required()
-    .oneOf([yup.ref("password"), null], "Passwords do not match.")
+    .oneOf([yup.ref("password"), null], null)
     .min(4, "Password needs to be at least 4 characters long."),
 });
 

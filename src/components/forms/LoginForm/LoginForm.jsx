@@ -1,5 +1,5 @@
 // Libraries
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import schema from "../../../schemas/loginSchema";
 
 import * as yup from "yup";
@@ -14,11 +14,14 @@ const initialFormErrors = {
   email: "",
   password: "",
 };
+const initialDisabled = true;
 
 export const LoginForm = () => {
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(initialDisabled);
+
   // Validation
   const validate = (name, value) => {
     yup
@@ -41,6 +44,9 @@ export const LoginForm = () => {
     // Axios Call
     // .then - setLoggedIn to true
   };
+  useEffect(() => {
+    schema.isValid(formValues).then((valid) => setDisabled(!valid));
+  }, [formValues]);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -70,7 +76,7 @@ export const LoginForm = () => {
           className="form__text-field"
         />
       </label>
-      <button className="button" id="loginButton">
+      <button className="button" id="loginButton" disabled={disabled}>
         Submit
       </button>
     </form>
