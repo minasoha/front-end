@@ -26,12 +26,13 @@ export const SignupForm = () => {
   const [usernameTaken, setUsernameTaken] = useState("");
 
   // Validation
-  const validate = (name, value) => {
-    yup
-      .reach(schema, name)
-      .validate(value)
-      .then(() => setFormErrors({ ...formErrors, [name]: "" }))
-      .catch((err) => setFormErrors({ ...formErrors, [name]: err.errors[0] }));
+  const validate = async (name, value) => {
+    try {
+      await yup.reach(schema, name).validate(value);
+      setFormErrors({ ...formErrors, [name]: "" });
+    } catch (error) {
+      setFormErrors({ ...formErrors, [name]: error.errors[0] });
+    }
   };
 
   // Event handlers
@@ -68,9 +69,12 @@ export const SignupForm = () => {
   }, []);
 
   // Enable the submit button if form is valid
-  useEffect(async () => {
-    const valid = await schema.isValid(formValues);
-    setDisabled(!valid);
+  useEffect(() => {
+    const updateDisabledSubmit = async () => {
+      const valid = await schema.isValid(formValues);
+      setDisabled(!valid);
+    };
+    updateDisabledSubmit();
   }, [formValues]);
 
   return (
@@ -110,7 +114,7 @@ export const SignupForm = () => {
         <input
           name="confirmEmail"
           value={formValues.confirmEmail}
-          type="email"
+          type="text"
           placeholder="Re-enter your email address."
           onChange={handleChange}
           className="form__text-field"
@@ -133,13 +137,12 @@ export const SignupForm = () => {
         <input
           name="confirmPassword"
           value={formValues.confirmPassword}
-          type="password"
+          type="text"
           placeholder="Re-enter your password."
           onChange={handleChange}
           className="form__text-field"
         />
       </label>
-
       <button
         className="button"
         data-testid="signup-button"
