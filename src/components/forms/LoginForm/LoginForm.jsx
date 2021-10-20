@@ -28,6 +28,7 @@ export const LoginForm = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
+  const [submitError, setSubmitError] = useState("");
 
   // Validation
   const validate = (name, value) => {
@@ -60,14 +61,18 @@ export const LoginForm = () => {
       );
       // Save login token to localStorage
       localStorage.setItem("token", loginData.data.token);
-      // Update global logged in state
+      // Update global logged in state and clear submit error
       setIsLoggedIn(true);
+      setSubmitError("");
       // Redirect to dashboard
       push("/dashboard");
     } catch (error) {
+      // Show the authentication error
+      setSubmitError("Could not authenticate user! Please try again, later.");
       console.log("Login Failure", error);
     }
   };
+
   useEffect(() => {
     schema.isValid(formValues).then((valid) => setDisabled(!valid));
   }, [formValues]);
@@ -84,6 +89,7 @@ export const LoginForm = () => {
       <div className="form__errors">
         <p>{formErrors.username}</p>
         <p>{formErrors.password}</p>
+        <p>{submitError}</p>
       </div>
       <label className="form__label">
         Username:
@@ -107,7 +113,7 @@ export const LoginForm = () => {
           className="form__text-field"
         />
       </label>
-      <button className="button" id="loginButton" disabled={disabled}>
+      <button className="button" data-testid="login-button" disabled={disabled}>
         Submit
       </button>
     </form>
