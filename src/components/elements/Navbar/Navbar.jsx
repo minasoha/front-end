@@ -13,7 +13,7 @@ export const Navbar = () => {
   };
 
   return (
-    <header className="navbar">
+    <header data-testid="navbar" className="navbar">
       <nav data-testid="navbar__nav" className="navbar__nav">
         <NavLink
           data-testid="navbar__dashboard-link"

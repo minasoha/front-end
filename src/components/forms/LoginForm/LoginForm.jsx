@@ -28,6 +28,7 @@ export const LoginForm = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
+  const [submitError, setSubmitError] = useState("");
 
   // Validation
   const validate = (name, value) => {
@@ -40,10 +41,9 @@ export const LoginForm = () => {
 
   //Event handlers
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const valueToUse = type === "checkbox" ? checked : value;
+    const { name, value } = e.target;
     validate(name, value);
-    setFormValues({ ...formValues, [name]: valueToUse });
+    setFormValues({ ...formValues, [name]: value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,14 +60,17 @@ export const LoginForm = () => {
       );
       // Save login token to localStorage
       localStorage.setItem("token", loginData.data.token);
-      // Update global logged in state
+      // Update global logged in state and clear submit error
       setIsLoggedIn(true);
+      setSubmitError("");
       // Redirect to dashboard
       push("/dashboard");
     } catch (error) {
-      console.log("Login Failure", error);
+      // Show the authentication error
+      setSubmitError("Could not authenticate user! Please try again, later.");
     }
   };
+
   useEffect(() => {
     schema.isValid(formValues).then((valid) => setDisabled(!valid));
   }, [formValues]);
@@ -84,6 +87,7 @@ export const LoginForm = () => {
       <div className="form__errors">
         <p>{formErrors.username}</p>
         <p>{formErrors.password}</p>
+        <p>{submitError}</p>
       </div>
       <label className="form__label">
         Username:
@@ -107,7 +111,7 @@ export const LoginForm = () => {
           className="form__text-field"
         />
       </label>
-      <button className="button" id="loginButton" disabled={disabled}>
+      <button className="button" data-testid="login-button" disabled={disabled}>
         Submit
       </button>
     </form>

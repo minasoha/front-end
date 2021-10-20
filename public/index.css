@@ -247,6 +247,12 @@ table {
   color: #2f2f2f;
   cursor: pointer;
 }
+.button:disabled {
+  background-color: #f0f7f0;
+  color: grey;
+  border-color: grey;
+  cursor: not-allowed;
+}
 /* Modifier Styles */
 .button--cover {
   border: none;

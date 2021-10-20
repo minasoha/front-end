@@ -15,12 +15,12 @@ const signupSchema = yup.object().shape({
     .string()
     .trim()
     .required()
-    .oneOf([yup.ref("email"), null], null),
+    .oneOf([yup.ref("email"), null], "Emails do not match."),
   password: yup
     .string()
     .trim()
     .required()
-    .min(4, "Password needs to be at least 4 characters long."),
+    .min(4, "Password must be at least 4 characters long."),
   confirmPassword: yup
     .string()
     .trim()
