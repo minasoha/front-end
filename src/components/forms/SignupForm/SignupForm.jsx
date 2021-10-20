@@ -63,6 +63,7 @@ export const SignupForm = () => {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__errors">
+        <p>{formErrors.username}</p>
         <p>{formErrors.email}</p>
         <p>{formErrors.confirmEmail}</p>
         <p>{formErrors.password}</p>

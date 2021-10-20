@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import schema from "../../../schemas/loginSchema";
 
 import * as yup from "yup";
+import axios from "axios";
 
 // Initial Form Data
 
 const initialFormValues = {
-  email: "",
+  username: "",
   password: "",
 };
 const initialFormErrors = {
-  email: "",
+  username: "",
   password: "",
 };
 
@@ -35,26 +36,38 @@ export const LoginForm = () => {
     validate(name, value);
     setFormValues({ ...formValues, [name]: valueToUse });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues.email);
-    // Axios Call
-    // .then - setLoggedIn to true
+    // Send login request to api
+    const userInfo = {
+      username: formValues.username,
+      password: formValues.password,
+    };
+    try {
+      console.log(
+        await axios.post(
+          "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/login",
+          userInfo
+        )
+      );
+    } catch (error) {
+      console.log("Login Failure", error);
+    }
   };
 
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__errors">
-        <p>{formErrors.email}</p>
+        <p>{formErrors.username}</p>
         <p>{formErrors.password}</p>
       </div>
       <label className="form__label">
-        Email:
+        Username:
         <input
-          name="email"
-          value={formValues.email}
-          type="email"
-          placeholder="Enter your email address."
+          name="username"
+          value={formValues.username}
+          type="text"
+          placeholder="username"
           onChange={handleChange}
           className="form__text-field"
         />
@@ -65,7 +78,7 @@ export const LoginForm = () => {
           name="password"
           value={formValues.password}
           type="password"
-          placeholder="Enter your password."
+          placeholder="password"
           onChange={handleChange}
           className="form__text-field"
         />
