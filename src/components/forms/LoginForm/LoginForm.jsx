@@ -2,8 +2,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import schema from "./../../../schemas/loginSchema";
-
 import * as yup from "yup";
 // Schemas
 import schema from "../../../schemas/loginSchema";
