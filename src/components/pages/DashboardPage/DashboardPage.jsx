@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Popup } from "../JoinPotluckPage/JoinPotluckPage";
+
 export const DashboardPage = () => {
   const [popup, setPopup] = useState(false);
 
