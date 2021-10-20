@@ -1,22 +1,29 @@
 // Libraries
-import React, { useState, useEffect } from "react";
-import schema from "../../../schemas/loginSchema";
-
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import * as yup from "yup";
+// Schemas
+import schema from "../../../schemas/loginSchema";
+// Contexts
+import { LoginContext } from "../../../contexts";
 
 // Initial Form Data
-
 const initialFormValues = {
-  email: "",
+  username: "",
   password: "",
 };
 const initialFormErrors = {
-  email: "",
+  username: "",
   password: "",
 };
 const initialDisabled = true;
 
 export const LoginForm = () => {
+  // Destructuring/Declarations
+  const { push } = useHistory();
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
@@ -38,29 +45,53 @@ export const LoginForm = () => {
     validate(name, value);
     setFormValues({ ...formValues, [name]: valueToUse });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues.email);
-    // Axios Call
-    // .then - setLoggedIn to true
+    // Place userInfo in object
+    const userInfo = {
+      username: formValues.username,
+      password: formValues.password,
+    };
+    try {
+      // Make an API call
+      const loginData = await axios.post(
+        "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/login",
+        userInfo
+      );
+      // Save login token to localStorage
+      localStorage.setItem("token", loginData.data.token);
+      // Update global logged in state
+      setIsLoggedIn(true);
+      // Redirect to dashboard
+      push("/dashboard");
+    } catch (error) {
+      console.log("Login Failure", error);
+    }
   };
   useEffect(() => {
     schema.isValid(formValues).then((valid) => setDisabled(!valid));
   }, [formValues]);
 
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      push("/dashboard");
+    }
+  }, []);
+
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__errors">
-        <p>{formErrors.email}</p>
+        <p>{formErrors.username}</p>
         <p>{formErrors.password}</p>
       </div>
       <label className="form__label">
-        Email:
+        Username:
         <input
-          name="email"
-          value={formValues.email}
-          type="email"
-          placeholder="Enter your email address."
+          name="username"
+          value={formValues.username}
+          type="text"
+          placeholder="username"
           onChange={handleChange}
           className="form__text-field"
         />
@@ -71,7 +102,7 @@ export const LoginForm = () => {
           name="password"
           value={formValues.password}
           type="password"
-          placeholder="Enter your password."
+          placeholder="password"
           onChange={handleChange}
           className="form__text-field"
         />

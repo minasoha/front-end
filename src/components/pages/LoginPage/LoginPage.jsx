@@ -26,9 +26,7 @@ export const LoginPage = () => {
         </NavLink>
       </div>
       <Switch>
-        <Route exact path="/login">
-          <LoginForm />
-        </Route>
+        <Route exact path="/login" component={LoginForm} />
         <Route exact path="/login/signup" component={SignupForm} />
       </Switch>
     </section>
