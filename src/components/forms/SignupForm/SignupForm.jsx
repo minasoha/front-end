@@ -74,7 +74,7 @@ export const SignupForm = () => {
       push("/dashboard");
     }
   }, []);
-  
+
   useEffect(() => {
     schema.isValid(formValues).then((valid) => setDisabled(!valid));
   }, [formValues]);
@@ -145,7 +145,11 @@ export const SignupForm = () => {
         />
       </label>
 
-      <button className="button" id="signupButton" disabled={disabled}>
+      <button
+        className="button"
+        data-testid="signup-button"
+        disabled={disabled}
+      >
         Submit
       </button>
     </form>

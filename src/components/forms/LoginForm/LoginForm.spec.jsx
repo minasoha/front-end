@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { renderWithRouter } from "./../../../utilities";
 import { LoginContext } from "./../../../contexts";
-import { LoginForm } from "./../LoginForm";
+import { LoginForm } from "./LoginForm";
 
 jest.mock("axios");
 
