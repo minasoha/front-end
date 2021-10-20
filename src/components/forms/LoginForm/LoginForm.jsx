@@ -44,12 +44,11 @@ export const LoginForm = () => {
       password: formValues.password,
     };
     try {
-      console.log(
-        await axios.post(
-          "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/login",
-          userInfo
-        )
+      const loginData = await axios.post(
+        "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/login",
+        userInfo
       );
+      localStorage.setItem("token", loginData.data.token);
     } catch (error) {
       console.log("Login Failure", error);
     }
