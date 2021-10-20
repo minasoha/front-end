@@ -1,12 +1,14 @@
 // Libraries
-import React, { useState } from "react";
-import schema from "../../../schemas/loginSchema";
-
-import * as yup from "yup";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import * as yup from "yup";
+// Schemas
+import schema from "../../../schemas/loginSchema";
+// Contexts
+import { LoginContext } from "../../../contexts";
 
 // Initial Form Data
-
 const initialFormValues = {
   username: "",
   password: "",
@@ -17,9 +19,14 @@ const initialFormErrors = {
 };
 
 export const LoginForm = () => {
+  // Destructuring/Declarations
+  const { push } = useHistory();
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
+
   // Validation
   const validate = (name, value) => {
     yup
@@ -38,21 +45,34 @@ export const LoginForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send login request to api
+    // Place userInfo in object
     const userInfo = {
       username: formValues.username,
       password: formValues.password,
     };
     try {
+      // Make an API call
       const loginData = await axios.post(
         "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/login",
         userInfo
       );
+      // Save login token to localStorage
       localStorage.setItem("token", loginData.data.token);
+      // Update global logged in state
+      setIsLoggedIn(true);
+      // Redirect to dashboard
+      push("/dashboard");
     } catch (error) {
       console.log("Login Failure", error);
     }
   };
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (isLoggedIn === true) {
+      push("/dashboard");
+    }
+  }, []);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
