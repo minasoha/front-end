@@ -34,6 +34,7 @@ export const SignupForm = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
+  const [usernameTaken, setUsernameTaken] = useState("");
 
   // Validation
   const validate = (name, value) => {
@@ -45,9 +46,8 @@ export const SignupForm = () => {
   };
   // Event handlers
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const valueToUse = type === "checkbox" ? checked : value;
-    setFormValues({ ...formValues, [name]: valueToUse });
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
     validate(name, value);
   };
   const handleSubmit = async (e) => {
@@ -65,7 +65,7 @@ export const SignupForm = () => {
       );
       push("/login");
     } catch (error) {
-      console.error("Failed to Register User", error);
+      setUsernameTaken("Username already taken");
     }
   };
 
@@ -82,6 +82,7 @@ export const SignupForm = () => {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__errors">
+        <p>{usernameTaken}</p>
         <p>{formErrors.username}</p>
         <p>{formErrors.email}</p>
         <p>{formErrors.confirmEmail}</p>

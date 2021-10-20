@@ -182,4 +182,42 @@ describe("Signup Form", () => {
     const passwordError = await screen.findByText(/passwords do not match/i);
     expect(passwordError).toBeInTheDocument();
   });
+
+  it("can show error for username being already taken", async () => {
+    // Force username taken message to be returned on submit
+    axios.post.mockRejectedValueOnce({
+      data: {
+        message: "username taken",
+      },
+    });
+    localStorage.clear();
+    const isLoggedIn = false;
+    renderWithRouter(
+      <LoginContext.Provider value={{ isLoggedIn }}>
+        <SignupForm />
+      </LoginContext.Provider>,
+      true
+    );
+
+    // Act: fill out the form and submit
+    const username = screen.getByLabelText("Username:");
+    const email = screen.getByLabelText("Email:");
+    const password = screen.getByLabelText("Password:");
+    const confirmEml = screen.getByLabelText("Confirm Email:");
+    const confirmPwd = screen.getByLabelText("Confirm Password:");
+    const submit = screen.getByTestId("signup-button");
+
+    userEvent.type(username, "username");
+    userEvent.type(email, "user@email.com");
+    userEvent.type(password, "password");
+    userEvent.type(confirmEml, "user@email.com");
+    userEvent.type(confirmPwd, "password");
+
+    // Assert: does the username taken error show up?
+    await waitFor(() => {
+      userEvent.click(submit);
+      const usernameTakenErr = screen.getByText(/username already taken/i);
+      expect(usernameTakenErr).toBeInTheDocument();
+    });
+  });
 });
