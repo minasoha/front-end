@@ -14,13 +14,15 @@ const App = () => {
   const { Provider } = LoginContext;
 
   // If there's a login token saved in localStorage, start app logged-in
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false
-  );
+  const hasLoginToken = localStorage.getItem("token") ? true : false;
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(hasLoginToken);
 
   return (
     <>
-      <Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      <Provider
+        value={{ isLoggedIn, setIsLoggedIn, isLoggingIn, setIsLoggingIn }}
+      >
         <Switch>
           <PrivateRoute
             path="/potluck/create"
