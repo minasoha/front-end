@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SignupForm } from "./SignupForm";
 
@@ -8,7 +8,7 @@ describe("Signup Form", () => {
     render(<SignupForm />);
   });
 
-  it("lets user type inside inputs for email/password/confirms", () => {
+  it("allows user to type inside email/password/confirm fields", async () => {
     // Arrange: Render the form
     render(<SignupForm />);
 
@@ -24,11 +24,16 @@ describe("Signup Form", () => {
     userEvent.type(confirmPasswordInput, "th3B4TC4V35");
 
     // Assert: Does each input contain what we typed?
-    expect(emailInput.value).toEqual("batman@gmail.com");
-    expect(confirmEmailInput.value).toEqual("batman@gmail.com");
-    expect(passwordInput.value).toEqual("th3B4TC4V35");
-    expect(confirmPasswordInput.value).toEqual("th3B4TC4V35");
+    await waitFor(() => {
+      expect(emailInput.value).toEqual("batman@gmail.com");
+      expect(confirmEmailInput.value).toEqual("batman@gmail.com");
+      expect(passwordInput.value).toEqual("th3B4TC4V35");
+      expect(confirmPasswordInput.value).toEqual("th3B4TC4V35");
+    });
   });
 
-  it.todo("invokes submit handler when submit button is pressed");
+  it.todo("sends an API post request when submit button is pressed");
+  it.todo("shows error for invalid email");
+  it.todo("shows error for a password being too short");
+  it.todo("shows errors for confirmation passwords/emails not matching");
 });

@@ -1,7 +1,12 @@
 // Libraries
-import React, { useState, useEffect } from "react";
-import schema from "../../../schemas/signupSchema";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import * as yup from "yup";
+// Schemas
+import schema from "./../../../schemas/signupSchema";
+// Contexts
+import { LoginContext } from "./../../../contexts";
 
 // Initial Form Data
 const initialFormValues = {
@@ -9,16 +14,22 @@ const initialFormValues = {
   confirmEmail: "",
   password: "",
   confirmPassword: "",
+  username: "",
 };
 const initialFormErrors = {
   email: "",
   confirmEmail: "",
   password: "",
   confirmPassword: "",
+  username: "",
 };
 const initialDisabled = true;
 
 export const SignupForm = () => {
+  // Destructuring/Declarations
+  const { isLoggedIn } = useContext(LoginContext);
+  const { push } = useHistory();
+
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
@@ -39,16 +50,31 @@ export const SignupForm = () => {
     setFormValues({ ...formValues, [name]: valueToUse });
     validate(name, value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Register a new user to the API
     const newUserInfo = {
       email: formValues.email.trim(),
       password: formValues.password.trim(),
+      username: formValues.username.trim(),
     };
-    // API CALL SHOULD GO HERE WHEN READY
-    console.log("FORM SUBMITTED!", newUserInfo);
+    try {
+      await axios.post(
+        "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/register",
+        newUserInfo
+      );
+      push("/login");
+    } catch (error) {
+      console.error("Failed to Register User", error);
+    }
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      push("/dashboard");
+    }
+  }, []);
+  
   useEffect(() => {
     schema.isValid(formValues).then((valid) => setDisabled(!valid));
   }, [formValues]);
@@ -56,11 +82,23 @@ export const SignupForm = () => {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__errors">
+        <p>{formErrors.username}</p>
         <p>{formErrors.email}</p>
         <p>{formErrors.confirmEmail}</p>
         <p>{formErrors.password}</p>
         <p>{formErrors.confirmPassword}</p>
       </div>
+      <label className="form__label">
+        Username:
+        <input
+          name="username"
+          value={formValues.username}
+          type="text"
+          placeholder="username"
+          onChange={handleChange}
+          className="form__text-field"
+        />
+      </label>
       <label className="form__label">
         Email:
         <input

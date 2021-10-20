@@ -1,18 +1,22 @@
 .navbar {
   background-color: @theme-color-dark;
-  padding: 1rem;
   display: flex;
   justify-content: center;
+  padding: 1rem;
 }
 .navbar__navlink {
-  color: @theme-color-light;
-  text-decoration: none;
-  padding: 0.5rem 2rem;
-  border: none;
+  background-color: none;
   border-radius: 0.5rem;
+  border: none;
+  color: @theme-color-light;
+  font-size: 1rem;
+  padding: 0.5rem 2rem;
+  text-decoration: none;
   transition: 150ms;
+  margin: 0 0.5rem;
 }
 .navbar__navlink:hover {
-  background-color: @theme-color-salmon;
-  /* color: @theme-color-dark; */
+  background-color: @theme-color-light;
+  color: @theme-color-dark;
+  cursor: pointer;
 }
