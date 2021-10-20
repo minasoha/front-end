@@ -41,10 +41,9 @@ export const LoginForm = () => {
 
   //Event handlers
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const valueToUse = type === "checkbox" ? checked : value;
+    const { name, value } = e.target;
     validate(name, value);
-    setFormValues({ ...formValues, [name]: valueToUse });
+    setFormValues({ ...formValues, [name]: value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,7 +68,6 @@ export const LoginForm = () => {
     } catch (error) {
       // Show the authentication error
       setSubmitError("Could not authenticate user! Please try again, later.");
-      console.log("Login Failure", error);
     }
   };
 
