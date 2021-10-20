@@ -7,23 +7,12 @@ import * as yup from "yup";
 import schema from "./../../../schemas/signupSchema";
 // Contexts
 import { LoginContext } from "./../../../contexts";
-
-// Initial Form Data
-const initialFormValues = {
-  email: "",
-  confirmEmail: "",
-  password: "",
-  confirmPassword: "",
-  username: "",
-};
-const initialFormErrors = {
-  email: "",
-  confirmEmail: "",
-  password: "",
-  confirmPassword: "",
-  username: "",
-};
-const initialDisabled = true;
+// State Data
+import {
+  initialFormValues,
+  initialFormErrors,
+  initialDisabled,
+} from "./initialSignupStates";
 
 export const SignupForm = () => {
   // Destructuring/Declarations
@@ -34,22 +23,25 @@ export const SignupForm = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
+  const [usernameTaken, setUsernameTaken] = useState("");
 
   // Validation
-  const validate = (name, value) => {
-    yup
-      .reach(schema, name)
-      .validate(value)
-      .then(() => setFormErrors({ ...formErrors, [name]: "" }))
-      .catch((err) => setFormErrors({ ...formErrors, [name]: err.errors[0] }));
+  const validate = async (name, value) => {
+    try {
+      await yup.reach(schema, name).validate(value);
+      setFormErrors({ ...formErrors, [name]: "" });
+    } catch (error) {
+      setFormErrors({ ...formErrors, [name]: error.errors[0] });
+    }
   };
+
   // Event handlers
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const valueToUse = type === "checkbox" ? checked : value;
-    setFormValues({ ...formValues, [name]: valueToUse });
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
     validate(name, value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Register a new user to the API
@@ -65,23 +57,30 @@ export const SignupForm = () => {
       );
       push("/login");
     } catch (error) {
-      console.error("Failed to Register User", error);
+      setUsernameTaken("Username already taken");
     }
   };
 
+  // Redirect to the dashboard if logged in
   useEffect(() => {
     if (isLoggedIn) {
       push("/dashboard");
     }
   }, []);
-  
+
+  // Enable the submit button if form is valid
   useEffect(() => {
-    schema.isValid(formValues).then((valid) => setDisabled(!valid));
+    const updateDisabledSubmit = async () => {
+      const valid = await schema.isValid(formValues);
+      setDisabled(!valid);
+    };
+    updateDisabledSubmit();
   }, [formValues]);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__errors">
+        <p>{usernameTaken}</p>
         <p>{formErrors.username}</p>
         <p>{formErrors.email}</p>
         <p>{formErrors.confirmEmail}</p>
@@ -115,7 +114,7 @@ export const SignupForm = () => {
         <input
           name="confirmEmail"
           value={formValues.confirmEmail}
-          type="email"
+          type="text"
           placeholder="Re-enter your email address."
           onChange={handleChange}
           className="form__text-field"
@@ -138,14 +137,17 @@ export const SignupForm = () => {
         <input
           name="confirmPassword"
           value={formValues.confirmPassword}
-          type="password"
+          type="text"
           placeholder="Re-enter your password."
           onChange={handleChange}
           className="form__text-field"
         />
       </label>
-
-      <button className="button" id="signupButton" disabled={disabled}>
+      <button
+        className="button"
+        data-testid="signup-button"
+        disabled={disabled}
+      >
         Submit
       </button>
     </form>
