@@ -7,23 +7,12 @@ import * as yup from "yup";
 import schema from "./../../../schemas/signupSchema";
 // Contexts
 import { LoginContext } from "./../../../contexts";
-
-// Initial Form Data
-const initialFormValues = {
-  email: "",
-  confirmEmail: "",
-  password: "",
-  confirmPassword: "",
-  username: "",
-};
-const initialFormErrors = {
-  email: "",
-  confirmEmail: "",
-  password: "",
-  confirmPassword: "",
-  username: "",
-};
-const initialDisabled = true;
+// State Data
+import {
+  initialFormValues,
+  initialFormErrors,
+  initialDisabled,
+} from "./initialSignupStates";
 
 export const SignupForm = () => {
   // Destructuring/Declarations
@@ -44,12 +33,14 @@ export const SignupForm = () => {
       .then(() => setFormErrors({ ...formErrors, [name]: "" }))
       .catch((err) => setFormErrors({ ...formErrors, [name]: err.errors[0] }));
   };
+
   // Event handlers
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
     validate(name, value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Register a new user to the API
@@ -69,14 +60,17 @@ export const SignupForm = () => {
     }
   };
 
+  // Redirect to the dashboard if logged in
   useEffect(() => {
     if (isLoggedIn) {
       push("/dashboard");
     }
   }, []);
 
-  useEffect(() => {
-    schema.isValid(formValues).then((valid) => setDisabled(!valid));
+  // Enable the submit button if form is valid
+  useEffect(async () => {
+    const valid = await schema.isValid(formValues);
+    setDisabled(!valid);
   }, [formValues]);
 
   return (
