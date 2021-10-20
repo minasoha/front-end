@@ -8,6 +8,7 @@ import {
 } from "./components/pages";
 import { WithNav } from "./components/elements";
 import { LoginContext } from "./contexts";
+import { PrivateRoute } from "./components/elements";
 
 const App = () => {
   const { Provider } = LoginContext;
@@ -21,11 +22,11 @@ const App = () => {
     <>
       <Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <Switch>
-          <Route
+          <PrivateRoute
             path="/potluck/create"
             component={() => <WithNav component={<CreatePotluckPage />} />}
           />
-          <Route
+          <PrivateRoute
             path="/dashboard"
             component={() => <WithNav component={<DashboardPage />} />}
           />

@@ -69,7 +69,7 @@ export const LoginForm = () => {
 
   // Redirect to dashboard if already logged in
   useEffect(() => {
-    if (isLoggedIn === true) {
+    if (isLoggedIn) {
       push("/dashboard");
     }
   }, []);

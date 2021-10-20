@@ -1,8 +1,12 @@
 // Libraries
-import React, { useState } from "react";
-import schema from "../../../schemas/signupSchema";
-import * as yup from "yup";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import * as yup from "yup";
+// Schemas
+import schema from "./../../../schemas/signupSchema";
+// Contexts
+import { LoginContext } from "./../../../contexts";
 
 // Initial Form Data
 const initialFormValues = {
@@ -21,6 +25,10 @@ const initialFormErrors = {
 };
 
 export const SignupForm = () => {
+  // Destructuring/Declarations
+  const { isLoggedIn } = useContext(LoginContext);
+  const { push } = useHistory();
+
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
@@ -49,16 +57,21 @@ export const SignupForm = () => {
       username: formValues.username.trim(),
     };
     try {
-      console.log(
-        await axios.post(
-          "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/register",
-          newUserInfo
-        )
+      await axios.post(
+        "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/register",
+        newUserInfo
       );
+      push("/login");
     } catch (error) {
-      console.error("Failed to Log In:", error);
+      console.error("Failed to Register User", error);
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      push("/dashboard");
+    }
+  }, []);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
