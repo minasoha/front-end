@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import schema from "../../../schemas/signupSchema";
 import * as yup from "yup";
+import axios from "axios";
 
 // Initial Form Data
 const initialFormValues = {
@@ -9,18 +10,21 @@ const initialFormValues = {
   confirmEmail: "",
   password: "",
   confirmPassword: "",
+  username: "",
 };
 const initialFormErrors = {
   email: "",
   confirmEmail: "",
   password: "",
   confirmPassword: "",
+  username: "",
 };
 
 export const SignupForm = () => {
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
+
   // Validation
   const validate = (name, value) => {
     yup
@@ -36,14 +40,24 @@ export const SignupForm = () => {
     validate(name, value);
     setFormValues({ ...formValues, [name]: valueToUse });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Register a new user to the API
     const newUserInfo = {
       email: formValues.email.trim(),
       password: formValues.password.trim(),
+      username: formValues.username.trim(),
     };
-    // API CALL SHOULD GO HERE WHEN READY
-    console.log("FORM SUBMITTED!", newUserInfo);
+    try {
+      console.log(
+        await axios.post(
+          "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/register",
+          newUserInfo
+        )
+      );
+    } catch (error) {
+      console.error("Failed to Log In:", error);
+    }
   };
 
   return (
@@ -54,6 +68,17 @@ export const SignupForm = () => {
         <p>{formErrors.password}</p>
         <p>{formErrors.confirmPassword}</p>
       </div>
+      <label className="form__label">
+        Username:
+        <input
+          name="username"
+          value={formValues.username}
+          type="text"
+          placeholder="username"
+          onChange={handleChange}
+          className="form__text-field"
+        />
+      </label>
       <label className="form__label">
         Email:
         <input
