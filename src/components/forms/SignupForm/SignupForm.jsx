@@ -23,6 +23,7 @@ const initialFormErrors = {
   confirmPassword: "",
   username: "",
 };
+const initialDisabled = true;
 
 export const SignupForm = () => {
   // Destructuring/Declarations
@@ -32,6 +33,7 @@ export const SignupForm = () => {
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(initialDisabled);
 
   // Validation
   const validate = (name, value) => {
@@ -45,8 +47,8 @@ export const SignupForm = () => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const valueToUse = type === "checkbox" ? checked : value;
-    validate(name, value);
     setFormValues({ ...formValues, [name]: valueToUse });
+    validate(name, value);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +74,10 @@ export const SignupForm = () => {
       push("/dashboard");
     }
   }, []);
+  
+  useEffect(() => {
+    schema.isValid(formValues).then((valid) => setDisabled(!valid));
+  }, [formValues]);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -139,7 +145,7 @@ export const SignupForm = () => {
         />
       </label>
 
-      <button className="button" id="signupButton">
+      <button className="button" id="signupButton" disabled={disabled}>
         Submit
       </button>
     </form>

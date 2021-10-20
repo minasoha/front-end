@@ -2,6 +2,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import schema from "./../../../schemas/loginSchema";
+
 import * as yup from "yup";
 // Schemas
 import schema from "../../../schemas/loginSchema";
@@ -17,6 +19,7 @@ const initialFormErrors = {
   username: "",
   password: "",
 };
+const initialDisabled = true;
 
 export const LoginForm = () => {
   // Destructuring/Declarations
@@ -26,6 +29,7 @@ export const LoginForm = () => {
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(initialDisabled);
 
   // Validation
   const validate = (name, value) => {
@@ -66,6 +70,9 @@ export const LoginForm = () => {
       console.log("Login Failure", error);
     }
   };
+  useEffect(() => {
+    schema.isValid(formValues).then((valid) => setDisabled(!valid));
+  }, [formValues]);
 
   // Redirect to dashboard if already logged in
   useEffect(() => {
@@ -102,7 +109,7 @@ export const LoginForm = () => {
           className="form__text-field"
         />
       </label>
-      <button className="button" id="loginButton">
+      <button className="button" id="loginButton" disabled={disabled}>
         Submit
       </button>
     </form>
