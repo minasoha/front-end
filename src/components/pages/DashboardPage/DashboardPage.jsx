@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Popup } from "../JoinPotluckPage/JoinPotluckPage";
-
+import { ViewPage } from "../ViewPage/ViewPage";
 export const DashboardPage = () => {
   const [popup, setPopup] = useState(false);
 
@@ -12,7 +12,7 @@ export const DashboardPage = () => {
   return (
     <section data-testid="dashboard" className="dashboard">
       <h1 className="dashboard__title">Dashboard</h1>
-
+      <ViewPage />
       <Link
         to="/potluck/create"
         data-testid="dashboard__button--create"

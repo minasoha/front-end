@@ -9,15 +9,17 @@ const initialItemValue = {
 export const Organizer = () => {
   const [item, setItem] = useState(initialItemValue);
 
+  const handleChange = (e) => {
+    setItem({ ...item, [e.target.item]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newItem = {
-      item: setItem,
-    };
+
     try {
       await axios.post(
         "https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/:user_id/:potluck_id",
-        newItem
+        item
       );
     } catch (err) {
       console.error("Failed to add item", err);
@@ -29,7 +31,7 @@ export const Organizer = () => {
         <h3 className="page-title">Add a Person</h3>
         <label>
           Username:
-          <input type="text" name="username" />
+          <input type="text" onChange={handleChange} name="username" />
         </label>
         <button className="button">Invite</button>
       </div>
@@ -38,15 +40,17 @@ export const Organizer = () => {
         <h3 className="page-title">ADD Items</h3>
         <label>
           Item Name:
-          <input type="text" name="item" />
+          <input type="text" onChange={handleChange} name="item" />
         </label>
         <br />
         <br />
         <label>
           Description:
-          <input type="text" name="description" />
+          <input type="text" onChange={handleChange} name="description" />
         </label>
-        <button onClick={handleSubmit}>Add Item</button>
+        <button className="button" onClick={handleSubmit}>
+          Add Item
+        </button>
       </div>
     </section>
   );
