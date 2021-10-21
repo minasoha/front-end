@@ -65,6 +65,12 @@ export const Organizer = () => {
       )
       .then((response) => {
         console.log("adding items succesful!", response);
+        setCurrentItems([...currentItems, ...itemsToAdd]);
+        setItemsToAdd([]);
+        setFormValues({
+          ...formValues,
+          item: "",
+        });
       })
       .catch((error) => {
         console.error("Failed to add item", error);
@@ -81,8 +87,8 @@ export const Organizer = () => {
     <section>
       <h3 className="page-title">Add a Person</h3>
 
-      <form onSubmit={handleInviteUser}>
-        <label>
+      <form className="form" onSubmit={handleInviteUser}>
+        <label className="form__label">
           Username:
           <input
             type="text"
@@ -90,8 +96,8 @@ export const Organizer = () => {
             value={formValues.invite}
             onChange={handleInputChange}
           />
+          <button className="button">Invite</button>
         </label>
-        <button className="button">Invite</button>
       </form>
 
       <div>
@@ -109,8 +115,8 @@ export const Organizer = () => {
         return <p>{item.item}</p>;
       })}
 
-      <form onSubmit={handleAddItem}>
-        <label>
+      <form className="form" onSubmit={handleAddItem}>
+        <label className="form__label">
           Item Name:
           <input
             type="text"
@@ -118,8 +124,8 @@ export const Organizer = () => {
             value={formValues.item}
             onChange={handleInputChange}
           />
+          <button className="button">Add Item</button>
         </label>
-        <button className="button">Add Item</button>
       </form>
 
       <button onClick={handleSubmitItems}>Submit all Items</button>
