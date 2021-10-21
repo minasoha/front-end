@@ -5,7 +5,8 @@ import { axiosWithAuth } from "./../../../utilities";
 import { LoginContext } from "./../../../contexts";
 
 export const DashboardPage = () => {
-  const { user_id } = useContext(LoginContext);
+  const { user_id, setUser_id, isLoggedIn, setIsLoggedIn } =
+    useContext(LoginContext);
   const [userPotlucks, setUserPotlucks] = useState([]);
 
   useEffect(() => {
@@ -21,7 +22,13 @@ export const DashboardPage = () => {
         console.error("could not fetch potlucks:", error);
       });
   }, []);
-  useEffect(() => {}, [user_id]);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+      setUser_id(localStorage.getItem("user_id"));
+    }
+  }, [isLoggedIn, user_id]);
 
   return (
     <section data-testid="dashboard" className="dashboard">
