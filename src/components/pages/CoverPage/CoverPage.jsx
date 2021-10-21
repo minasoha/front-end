@@ -1,17 +1,7 @@
-import React, { useEffect, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { LoginContext } from "../../../contexts";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export const CoverPage = () => {
-  const { push } = useHistory();
-  const { isLoggedIn } = useContext(LoginContext);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      push("/dashboard");
-    }
-  }, []);
-
   return (
     <section data-testid="cover-page" className="cover-page">
       <h1 className="cover-page__title">Potluck Planner</h1>
