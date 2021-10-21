@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { axiosWithAuth } from "./../../../utilities";
 
 // Initial State Data
@@ -13,6 +13,7 @@ const initialPotluckValues = {
 export const CreatePotluckForm = () => {
   // Destructuring
   const { push } = useHistory();
+  // const { user_id } = useParams();
 
   // State Initialization
   const [potluckValues, setPotluckValues] = useState(initialPotluckValues);
@@ -25,10 +26,20 @@ export const CreatePotluckForm = () => {
       [name]: value,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(potluckValues);
-    // push("/dashboard");
+    try {
+      // THIS REQUEST IS HARDCODED TO A DUMMY ACCOUNT!!!
+      // Switch the number at the end to use your account for testing
+      const response = await axiosWithAuth().post(
+        "https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/create/9",
+        potluckValues
+      );
+      console.log("Successfully created potluck!", response.data);
+      // push("/dashboard");
+    } catch (error) {
+      console.error("Failed to create potluck:", error);
+    }
   };
 
   // Markup
