@@ -31,8 +31,6 @@ export const CreatePotluckForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // THIS REQUEST IS HARDCODED TO A DUMMY ACCOUNT!!!
-      // Switch the number at the end to use your account for testing
       const response = await axiosWithAuth().post(
         `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/create/${user_id}`,
         potluckValues

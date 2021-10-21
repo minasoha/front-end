@@ -20,7 +20,7 @@ export const DashboardPage = () => {
       .catch((error) => {
         console.error("could not fetch potlucks:", error);
       });
-  }, []);
+  }, [user_id]);
 
   return (
     <section data-testid="dashboard" className="dashboard">
