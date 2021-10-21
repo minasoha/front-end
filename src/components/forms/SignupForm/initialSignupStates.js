@@ -7,9 +7,16 @@ export const initialFormValues = {
 };
 export const initialFormErrors = {
   email: "",
-  confirmEmail: "",
+  // confirmEmail: "",
   password: "",
-  confirmPassword: "",
+  // confirmPassword: "",
   username: "",
 };
 export const initialDisabled = true;
+
+export const initialEmailConfirm = {
+  confirmEmail: "",
+};
+export const initialPassConfirm = {
+  confirmPassword: "",
+};

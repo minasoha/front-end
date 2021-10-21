@@ -15,7 +15,7 @@ const signupSchema = yup.object().shape({
     .string()
     .trim()
     .required()
-    .oneOf([yup.ref("email"), null], "Emails do not match."),
+    .oneOf([yup.ref("email"), null], "Email addresses do not match."),
   password: yup
     .string()
     .trim()

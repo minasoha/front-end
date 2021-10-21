@@ -12,6 +12,8 @@ import {
   initialFormValues,
   initialFormErrors,
   initialDisabled,
+  initialEmailConfirm,
+  initialPassConfirm,
 } from "./initialSignupStates";
 
 export const SignupForm = () => {
@@ -22,6 +24,8 @@ export const SignupForm = () => {
   // State
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [emailConfirm, setEmailConfirm] = useState(initialEmailConfirm);
+  const [passConfirm, setPassConfirm] = useState(initialPassConfirm);
   const [disabled, setDisabled] = useState(initialDisabled);
   const [usernameTaken, setUsernameTaken] = useState("");
 
@@ -29,8 +33,12 @@ export const SignupForm = () => {
   const validate = async (name, value) => {
     try {
       await yup.reach(schema, name).validate(value);
+      setEmailConfirm({ ...emailConfirm, [name]: "" });
+      setPassConfirm({ ...passConfirm, [name]: "" });
       setFormErrors({ ...formErrors, [name]: "" });
     } catch (error) {
+      setEmailConfirm({ ...emailConfirm, [name]: error.errors[0] });
+      setPassConfirm({ ...passConfirm, [name]: error.errors[0] });
       setFormErrors({ ...formErrors, [name]: error.errors[0] });
     }
   };
@@ -41,6 +49,21 @@ export const SignupForm = () => {
     setFormValues({ ...formValues, [name]: value });
     validate(name, value);
   };
+  useEffect(() => {
+    if (formValues.email === formValues.confirmEmail) {
+      setEmailConfirm(initialEmailConfirm);
+    }
+    if (formValues.password === formValues.confirmPassword) {
+      setPassConfirm(initialPassConfirm);
+    }
+  }, [
+    formValues.email,
+    formValues.confirmEmail,
+    emailConfirm,
+    passConfirm,
+    formValues.password,
+    formValues.confirmPassword,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,9 +106,9 @@ export const SignupForm = () => {
         <p>{usernameTaken}</p>
         <p>{formErrors.username}</p>
         <p>{formErrors.email}</p>
-        <p>{formErrors.confirmEmail}</p>
+        <p>{emailConfirm.confirmEmail}</p>
         <p>{formErrors.password}</p>
-        <p>{formErrors.confirmPassword}</p>
+        <p>{passConfirm.confirmPassword}</p>
       </div>
       <label className="form__label">
         Username:
