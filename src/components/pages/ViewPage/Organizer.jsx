@@ -36,13 +36,22 @@ export const Organizer = () => {
   };
   const handleInviteUser = (e) => {
     e.preventDefault();
-    inviteGuest(formValues.invite);
+    inviteGuest(formValues.invite, user_id, potluck_id, guests, setGuests);
+    setFormValues({
+      ...formValues,
+      invite: "",
+    });
   };
   const handleSubmitItems = (e) => {
+    e.preventDefault();
     // Send API request
-    requestItems(itemsToAdd, user_id, potluck_id);
-    // Update Local State
-    setCurrentItems([...currentItems, ...itemsToAdd]);
+    requestItems(
+      itemsToAdd,
+      user_id,
+      potluck_id,
+      currentItems,
+      setCurrentItems
+    );
     // Clear Form Inputs
     setItemsToAdd([]);
     setFormValues({
@@ -65,6 +74,11 @@ export const Organizer = () => {
   return (
     <section>
       <h3 className="page-title">Add a Person</h3>
+
+      <h3>Current Guests</h3>
+      {guests.map((guest) => {
+        return <p>{guest.username}</p>;
+      })}
 
       <form className="form" onSubmit={handleInviteUser}>
         <label className="form__label">
