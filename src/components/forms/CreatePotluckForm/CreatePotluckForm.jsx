@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useHistory, useParams } from "react-router";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router";
 import { axiosWithAuth } from "./../../../utilities";
-import { createPotluckSchema } from "./../../../schemas/createPotluckSchema";
+// import { createPotluckSchema } from "./../../../schemas/createPotluckSchema";
+import { LoginContext } from "./../../../contexts";
 
 // Initial State Data
 const initialPotluckValues = {
@@ -14,7 +15,7 @@ const initialPotluckValues = {
 export const CreatePotluckForm = () => {
   // Destructuring
   const { push } = useHistory();
-  const { user_id } = useParams();
+  const { user_id } = useContext(LoginContext);
 
   // State Initialization
   const [potluckValues, setPotluckValues] = useState(initialPotluckValues);
@@ -37,7 +38,7 @@ export const CreatePotluckForm = () => {
         potluckValues
       );
       console.log("Successfully created potluck!", response.data);
-      // push("/dashboard");
+      push("/dashboard");
     } catch (error) {
       console.error("Failed to create potluck:", error);
     }

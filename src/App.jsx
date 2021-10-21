@@ -15,16 +15,18 @@ const App = () => {
 
   // If there's a login token saved in localStorage, start app logged-in
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user_id, setUser_id] = useState(null);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsLoggedIn(true);
+      setUser_id(localStorage.getItem("user_id"));
     }
   }, []);
 
   return (
     <>
-      <Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      <Provider value={{ isLoggedIn, setIsLoggedIn, user_id }}>
         <Switch>
           <PrivateRoute path="/potluck/create">
             <WithNav component={<CreatePotluckPage />} />

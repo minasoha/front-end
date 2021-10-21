@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Popup } from "./../JoinPotluckPage/JoinPotluckPage";
 import { ViewPage } from "./../ViewPage/ViewPage";
 import { PotluckCard } from "./../../elements";
 import { axiosWithAuth } from "./../../../utilities";
+import { LoginContext } from "./../../../contexts";
 
 export const DashboardPage = () => {
+  const { user_id } = useContext(LoginContext);
+
   const [userPotlucks, setUserPotlucks] = useState([]);
   const [popup, setPopup] = useState(false);
 
@@ -14,22 +17,17 @@ export const DashboardPage = () => {
   };
 
   useEffect(() => {
-    const updatePotlucks = async () => {
-      try {
-        // THIS REQUEST IS HARDCODED!!! Change the number at the end to match
-        // your own user ID when testing; you can look for it by sending a get
-        // request to the url below, with path "/api/users" via a console log
-        // or a helper program like "Postman" (recommended)
-        const response = await axiosWithAuth().get(
-          "https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/9"
-        );
+    axiosWithAuth()
+      .get(
+        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/${user_id}`
+      )
+      .then((response) => {
         console.log(response);
         setUserPotlucks(response.data);
-      } catch (error) {
-        console.error("Failed to get user's potlucks:", error);
-      }
-      updatePotlucks();
-    };
+      })
+      .catch((error) => {
+        console.error("could not fetch potlucks:", error);
+      });
   }, []);
 
   return (
@@ -53,6 +51,7 @@ export const DashboardPage = () => {
       <Popup popup={popup} setPopup={setPopup} />
 
       <h2 className="dashboard__subtitle">Your Potlucks</h2>
+
       {userPotlucks.map((potluck) => {
         return <PotluckCard potluck={potluck} />;
       })}

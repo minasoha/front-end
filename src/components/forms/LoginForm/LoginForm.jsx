@@ -61,6 +61,7 @@ export const LoginForm = () => {
       console.log(loginData);
       // Save login token to localStorage
       localStorage.setItem("token", loginData.data.token);
+      localStorage.setItem("user_id", loginData.data.user_id);
       // Update global logged in state and clear submit error
       setIsLoggedIn(true);
       setSubmitError("");
