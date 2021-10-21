@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { LoginContext } from "../../../contexts";
 import { axiosWithAuth } from "./../../../utilities";
@@ -9,16 +9,29 @@ export const Organizer = () => {
   const { potluck_id } = useParams();
 
   // State
+  const [currentItems, setCurrentItems] = useState([]);
   const [itemsToAdd, setItemsToAdd] = useState([]);
   const [formValues, setFormValues] = useState({
     invite: "",
     item: "",
   });
 
+  // Helpers
+  const updateCurrentItems = async () => {
+    try {
+      const databaseItems = await axiosWithAuth().get(
+        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/${user_id}/${potluck_id}`
+      );
+      setCurrentItems(databaseItems.data);
+    } catch (error) {
+      console.error("could not fetch current items", error);
+    }
+  };
+
   // Event Handlers
-  const addItem = (e) => {
+  const handleAddItem = (e) => {
     e.preventDefault();
-    setItemsToAdd([...itemsToAdd, formValues.item]);
+    setItemsToAdd([...itemsToAdd, { item: formValues.item }]);
   };
   const handleInputChange = (e) => {
     const { value, name } = e.target;
@@ -27,9 +40,9 @@ export const Organizer = () => {
       [name]: value,
     });
   };
-  const inviteUser = () => {};
+  const handleInviteUser = () => {};
 
-  const submitItems = () => {
+  const handleSubmitItems = () => {
     axiosWithAuth()
       .post(
         `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/${user_id}/${potluck_id}`,
@@ -43,11 +56,17 @@ export const Organizer = () => {
       });
   };
 
+  // Side Effects
+  useEffect(() => {
+    updateCurrentItems();
+  }, []);
+  useEffect(() => {}, [currentItems]);
+
   return (
     <section>
       <h3 className="page-title">Add a Person</h3>
 
-      <form onSubmit={inviteUser}>
+      <form onSubmit={handleInviteUser}>
         <label>
           Username:
           <input
@@ -60,15 +79,22 @@ export const Organizer = () => {
         <button className="button">Invite</button>
       </form>
 
+      <div>
+        <h3>Current Items</h3>
+        {currentItems.map((item) => {
+          return <p>{item.item}</p>;
+        })}
+      </div>
+
       <hr />
 
       <h3 className="page-title">ADD Items</h3>
 
       {itemsToAdd.map((item) => {
-        return <p>{item}</p>;
+        return <p>{item.item}</p>;
       })}
 
-      <form onSubmit={addItem}>
+      <form onSubmit={handleAddItem}>
         <label>
           Item Name:
           <input
@@ -81,7 +107,7 @@ export const Organizer = () => {
         <button className="button">Add Item</button>
       </form>
 
-      <button onClick={submitItems}>Submit all Items</button>
+      <button onClick={handleSubmitItems}>Submit all Items</button>
     </section>
   );
 };

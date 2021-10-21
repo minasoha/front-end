@@ -33,8 +33,8 @@ export const DashboardPage = () => {
         Create New Potluck
       </Link>
       <h2 className="dashboard__subtitle">Your Potlucks</h2>
-      {userPotlucks.map((potluck, index) => {
-        return <PotluckCard index={index} potluck={potluck} />;
+      {userPotlucks.map((potluck) => {
+        return <PotluckCard potluck={potluck} />;
       })}
     </section>
   );
