@@ -279,3 +279,20 @@ table {
   min-width: 400px;
   padding: 0.3rem;
 }
+.potluck-card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.potluck-card__title {
+  font-size: 1.5rem;
+  padding: 0 1rem 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: solid 1px #2f2f2f;
+}
+.potluck-card .button {
+  margin-top: 1rem;
+}
