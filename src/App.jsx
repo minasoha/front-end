@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      <Provider value={{ isLoggedIn, setIsLoggedIn, user_id }}>
+      <Provider value={{ isLoggedIn, setIsLoggedIn, user_id, setUser_id }}>
         <Switch>
           <PrivateRoute path="/potluck/view/:organizer/:potluck_id">
             <WithNav component={<ViewPage />} />
