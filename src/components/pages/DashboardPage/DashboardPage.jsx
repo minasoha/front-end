@@ -1,13 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Popup } from "../JoinPotluckPage/JoinPotluckPage";
-import { ViewPage } from "../ViewPage/ViewPage";
+import { Popup } from "./../JoinPotluckPage/JoinPotluckPage";
+import { ViewPage } from "./../ViewPage/ViewPage";
+import { PotluckCard } from "./../../elements";
+import { axiosWithAuth } from "./../../../utilities";
+
 export const DashboardPage = () => {
+  const [userPotlucks, setUserPotlucks] = useState([]);
   const [popup, setPopup] = useState(false);
 
   const openPopup = () => {
     setPopup((popup) => !popup);
   };
+
+  useEffect(() => {
+    const updatePotlucks = async () => {
+      try {
+        // THIS REQUEST IS HARDCODED!!! Change the number at the end to match
+        // your own user ID when testing; you can look for it by sending a get
+        // request to the url below, with path "/api/users" via a console log
+        // or a helper program like "Postman" (recommended)
+        const response = await axiosWithAuth().get(
+          "https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/7"
+        );
+        console.log(response);
+        setUserPotlucks(response.data);
+      } catch (error) {
+        console.error("Failed to get user's potlucks:", error);
+      }
+      updatePotlucks();
+    };
+  }, []);
 
   return (
     <section data-testid="dashboard" className="dashboard">
@@ -28,43 +51,11 @@ export const DashboardPage = () => {
         Join Potluck
       </button>
       <Popup popup={popup} setPopup={setPopup} />
-      {/* The below is placeholder code until we have a working system! */}
 
       <h2 className="dashboard__subtitle">Your Potlucks</h2>
-
-      {/* These cards are prime for refactoring! */}
-      {/* They should be their own component */}
-
-      <div className="potluck-card">
-        <h3 className="potluck-card__title">Potluck 1</h3>
-        <Link
-          to="/potluck/view/1"
-          data-testid="dashboard__button--view"
-          className="button"
-        >
-          View
-        </Link>
-      </div>
-      <div className="potluck-card">
-        <h3 className="potluck-card__title">Potluck 2</h3>
-        <Link
-          to="/potluck/view/2"
-          data-testid="dashboard__button--view"
-          className="button"
-        >
-          View
-        </Link>
-      </div>
-      <div className="potluck-card">
-        <h3 className="potluck-card__title">Potluck 3</h3>
-        <Link
-          to="/potluck/view/3"
-          data-testid="dashboard__button--view"
-          className="button"
-        >
-          View
-        </Link>
-      </div>
+      {userPotlucks.map((potluck) => {
+        return <PotluckCard potluck={potluck} />;
+      })}
     </section>
   );
 };

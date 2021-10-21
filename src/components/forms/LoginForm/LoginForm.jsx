@@ -58,6 +58,7 @@ export const LoginForm = () => {
         "https://potluckplanner-bw-10-2021.herokuapp.com/api/auth/login",
         userInfo
       );
+      console.log(loginData);
       // Save login token to localStorage
       localStorage.setItem("token", loginData.data.token);
       // Update global logged in state and clear submit error
