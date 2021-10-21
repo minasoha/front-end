@@ -42,19 +42,19 @@ export const Organizer = () => {
   };
   const handleInviteUser = (e) => {
     e.preventDefault();
-    // axiosWithAuth()
-    //   .post(
-    //     `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/guests/${user_id}/${potluck_id}`,
-    //     {
-    //       username: formValues.invite,
-    //     }
-    //   )
-    //   .then((response) => {
-    //     console.log("successfully invited user!", response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("could not invite user!", error);
-    //   });
+    axiosWithAuth()
+      .post(
+        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/guests/${user_id}/${potluck_id}`,
+        {
+          username: formValues.invite,
+        }
+      )
+      .then((response) => {
+        console.log("successfully invited user!", response.data);
+      })
+      .catch((error) => {
+        console.error("could not invite user!", error);
+      });
   };
 
   const handleSubmitItems = () => {
