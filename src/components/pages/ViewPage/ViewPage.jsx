@@ -13,9 +13,7 @@ export const ViewPage = () => {
     if (user_id === organizer) {
       setIsOrganizer(true);
     }
-    console.log(organizer);
-    console.log(isOrganizer);
-  }, []);
+  }, [user_id]);
 
   return (
     <section className="view-page">
