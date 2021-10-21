@@ -21,7 +21,7 @@ export const DashboardPage = () => {
       .catch((error) => {
         console.error("could not fetch potlucks:", error);
       });
-  }, []);
+  }, [user_id]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
