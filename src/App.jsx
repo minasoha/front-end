@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import {
   CoverPage,
   LoginPage,
@@ -14,16 +14,17 @@ const App = () => {
   const { Provider } = LoginContext;
 
   // If there's a login token saved in localStorage, start app logged-in
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("token") === true
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <>
-      <Provider
-        value={{ isLoggedIn, setIsLoggedIn, isLoggingIn, setIsLoggingIn }}
-      >
+      <Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <Switch>
           <PrivateRoute path="/potluck/create">
             <WithNav component={<CreatePotluckPage />} />
@@ -32,7 +33,9 @@ const App = () => {
             <WithNav component={<DashboardPage />} />
           </PrivateRoute>
           <Route path="/login" component={LoginPage} />
-          <Route exact path="/" component={CoverPage} />
+          <Route exact path="/">
+            {isLoggedIn ? <Redirect to="/dashboard" /> : <CoverPage />}
+          </Route>
         </Switch>
       </Provider>
     </>

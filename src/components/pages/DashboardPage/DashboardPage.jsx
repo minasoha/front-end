@@ -21,7 +21,7 @@ export const DashboardPage = () => {
         // request to the url below, with path "/api/users" via a console log
         // or a helper program like "Postman" (recommended)
         const response = await axiosWithAuth().get(
-          "https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/7"
+          "https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/9"
         );
         console.log(response);
         setUserPotlucks(response.data);
