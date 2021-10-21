@@ -1,57 +1,87 @@
-import React, { useState } from "react";
-import axios from "axios";
-
-const initialItemValue = {
-  item: "",
-  description: "",
-};
+import React, { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
+import { LoginContext } from "../../../contexts";
+import { axiosWithAuth } from "./../../../utilities";
 
 export const Organizer = () => {
-  const [item, setItem] = useState(initialItemValue);
+  // Destructuring
+  const { user_id } = useContext(LoginContext);
+  const { potluck_id } = useParams();
 
-  const handleChange = (e) => {
-    setItem({ ...item, [e.target.item]: e.target.value });
-  };
+  // State
+  const [itemsToAdd, setItemsToAdd] = useState([]);
+  const [formValues, setFormValues] = useState({
+    invite: "",
+    item: "",
+  });
 
-  const handleSubmit = async (e) => {
+  // Event Handlers
+  const addItem = (e) => {
     e.preventDefault();
-
-    try {
-      await axios.post(
-        "https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/:user_id/:potluck_id",
-        item
-      );
-    } catch (err) {
-      console.error("Failed to add item", err);
-    }
+    setItemsToAdd([...itemsToAdd, formValues.item]);
   };
+  const handleInputChange = (e) => {
+    const { value, name } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
+  const inviteUser = () => {};
+
+  const submitItems = () => {
+    axiosWithAuth()
+      .post(
+        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/${user_id}/${potluck_id}`,
+        itemsToAdd
+      )
+      .then((response) => {
+        console.log("adding items succesful!", response);
+      })
+      .catch((error) => {
+        console.error("Failed to add item", error);
+      });
+  };
+
   return (
-    <section className="organizer" onSubmit={handleSubmit}>
-      <div className="invite-code">
-        <h3 className="page-title">Add a Person</h3>
+    <section>
+      <h3 className="page-title">Add a Person</h3>
+
+      <form onSubmit={inviteUser}>
         <label>
           Username:
-          <input type="text" onChange={handleChange} name="username" />
+          <input
+            type="text"
+            name="invite"
+            value={formValues.invite}
+            onChange={handleInputChange}
+          />
         </label>
         <button className="button">Invite</button>
-      </div>
+      </form>
+
       <hr />
-      <div className="add-items">
-        <h3 className="page-title">ADD Items</h3>
+
+      <h3 className="page-title">ADD Items</h3>
+
+      {itemsToAdd.map((item) => {
+        return <p>{item}</p>;
+      })}
+
+      <form onSubmit={addItem}>
         <label>
           Item Name:
-          <input type="text" onChange={handleChange} name="item" />
+          <input
+            type="text"
+            name="item"
+            value={formValues.item}
+            onChange={handleInputChange}
+          />
         </label>
-        <br />
-        <br />
-        <label>
-          Description:
-          <input type="text" onChange={handleChange} name="description" />
-        </label>
-        <button className="button" onClick={handleSubmit}>
-          Add Item
-        </button>
-      </div>
+        <button className="button">Add Item</button>
+      </form>
+
+      <button onClick={submitItems}>Submit all Items</button>
     </section>
   );
 };

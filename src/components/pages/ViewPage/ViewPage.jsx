@@ -1,12 +1,26 @@
-import React from "react";
-import { Guest } from "./Guest";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { LoginContext } from "./../../../contexts";
 import { Organizer } from "./Organizer";
-export function ViewPage() {
-  //if user is organizer then show <Organizer /> else show <Guest />
+import { Guest } from "./Guest";
+
+export const ViewPage = () => {
+  const { user_id } = useContext(LoginContext);
+  const { organizer } = useParams();
+  const [isOrganizer, setIsOrganizer] = useState(false);
+
+  useEffect(() => {
+    if (user_id === organizer) {
+      setIsOrganizer(true);
+    }
+    console.log(organizer);
+    console.log(isOrganizer);
+  }, []);
+
   return (
-    <div>
-      <Organizer />
-      <Guest />
-    </div>
+    <section className="view-page">
+      <h2>You are organizer: {isOrganizer ? "true" : "false"}</h2>
+      {isOrganizer ? <Organizer /> : <Guest />}
+    </section>
   );
-}
+};

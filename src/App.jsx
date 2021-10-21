@@ -5,10 +5,10 @@ import {
   LoginPage,
   DashboardPage,
   CreatePotluckPage,
+  ViewPage,
 } from "./components/pages";
-import { WithNav } from "./components/elements";
+import { WithNav, PrivateRoute } from "./components/elements";
 import { LoginContext } from "./contexts";
-import { PrivateRoute } from "./components/elements";
 
 const App = () => {
   const { Provider } = LoginContext;
@@ -28,6 +28,9 @@ const App = () => {
     <>
       <Provider value={{ isLoggedIn, setIsLoggedIn, user_id }}>
         <Switch>
+          <PrivateRoute path="/potluck/view/:organizer/:potluck_id">
+            <WithNav component={<ViewPage />} />
+          </PrivateRoute>
           <PrivateRoute path="/potluck/create">
             <WithNav component={<CreatePotluckPage />} />
           </PrivateRoute>

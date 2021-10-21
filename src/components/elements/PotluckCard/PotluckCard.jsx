@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const PotluckCard = (props) => {
-  const { potluck_name, location, date, time } = props.potluck;
+  const { index } = props;
+  const { potluck_name, location, date, time, organizer } = props.potluck;
 
   return (
     <div className="potluck-card">
@@ -9,6 +11,7 @@ export const PotluckCard = (props) => {
       <p className="potluck-card__description">Location: {location}</p>
       <p className="potluck-card__description">Date: {date}</p>
       <p className="potluck-card__description">Time: {time}</p>
+      <Link to={`/potluck/view/${organizer}/${index}`}>View</Link>
     </div>
   );
 };
