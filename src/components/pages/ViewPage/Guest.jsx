@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { LoginContext } from "../../../contexts";
-import { axiosWithAuth } from "../../../utilities";
+import { getPotluckItems, getPotluckGuests } from "./../../../services";
 
 export const Guest = () => {
   // Destructuring
@@ -12,32 +12,14 @@ export const Guest = () => {
   const [currentItems, setCurrentItems] = useState([]);
   const [guests, setGuests] = useState([]);
 
-  // Helpers
-  const updateCurrentItems = async () => {
-    try {
-      const databaseItems = await axiosWithAuth().get(
-        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/${user_id}/${potluck_id}`
-      );
-      setCurrentItems(databaseItems.data);
-    } catch (error) {
-      console.error("could not fetch current items", error);
-    }
-  };
-  const updateGuests = async () => {
-    try {
-      const guestList = await axiosWithAuth().get(
-        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/guests/${user_id}/${potluck_id}`
-      );
-      setGuests(guestList.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   // Side Effects
   useEffect(() => {
-    updateCurrentItems();
-    updateGuests();
+    (async () => {
+      const potluckItems = await getPotluckItems(user_id, potluck_id);
+      const potluckGuests = await getPotluckGuests(user_id, potluck_id);
+      setCurrentItems(potluckItems);
+      setGuests(potluckGuests);
+    })();
   }, []);
   useEffect(() => {}, [currentItems, guests]);
 

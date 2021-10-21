@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { LoginContext } from "../../../contexts";
-import { axiosWithAuth } from "./../../../utilities";
+import {
+  getPotluckItems,
+  getPotluckGuests,
+  inviteGuest,
+  requestItems,
+} from "./../../../services";
 
 export const Organizer = () => {
   // Destructuring
@@ -10,23 +15,12 @@ export const Organizer = () => {
 
   // State
   const [currentItems, setCurrentItems] = useState([]);
+  const [guests, setGuests] = useState([]);
   const [itemsToAdd, setItemsToAdd] = useState([]);
   const [formValues, setFormValues] = useState({
     invite: "",
     item: "",
   });
-
-  // Helpers
-  const updateCurrentItems = async () => {
-    try {
-      const databaseItems = await axiosWithAuth().get(
-        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/${user_id}/${potluck_id}`
-      );
-      setCurrentItems(databaseItems.data);
-    } catch (error) {
-      console.error("could not fetch current items", error);
-    }
-  };
 
   // Event Handlers
   const handleAddItem = (e) => {
@@ -42,46 +36,31 @@ export const Organizer = () => {
   };
   const handleInviteUser = (e) => {
     e.preventDefault();
-    axiosWithAuth()
-      .post(
-        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/guests/${user_id}/${potluck_id}`,
-        {
-          username: formValues.invite,
-        }
-      )
-      .then((response) => {
-        console.log("successfully invited user!", response.data);
-      })
-      .catch((error) => {
-        console.error("could not invite user!", error);
-      });
+    inviteGuest(formValues.invite);
   };
-
-  const handleSubmitItems = () => {
-    axiosWithAuth()
-      .post(
-        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/items/${user_id}/${potluck_id}`,
-        itemsToAdd
-      )
-      .then((response) => {
-        console.log("adding items succesful!", response);
-        setCurrentItems([...currentItems, ...itemsToAdd]);
-        setItemsToAdd([]);
-        setFormValues({
-          ...formValues,
-          item: "",
-        });
-      })
-      .catch((error) => {
-        console.error("Failed to add item", error);
-      });
+  const handleSubmitItems = (e) => {
+    // Send API request
+    requestItems(itemsToAdd, user_id, potluck_id);
+    // Update Local State
+    setCurrentItems([...currentItems, ...itemsToAdd]);
+    // Clear Form Inputs
+    setItemsToAdd([]);
+    setFormValues({
+      ...formValues,
+      item: "",
+    });
   };
 
   // Side Effects
   useEffect(() => {
-    updateCurrentItems();
+    (async () => {
+      const potluckItems = await getPotluckItems(user_id, potluck_id);
+      const potluckGuests = await getPotluckGuests(user_id, potluck_id);
+      setCurrentItems(potluckItems);
+      setGuests(potluckGuests);
+    })();
   }, []);
-  useEffect(() => {}, [currentItems]);
+  useEffect(() => {}, [currentItems, itemsToAdd, guests]);
 
   return (
     <section>
