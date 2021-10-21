@@ -22,7 +22,7 @@ const App = () => {
       setIsLoggedIn(true);
       setUser_id(localStorage.getItem("user_id"));
     }
-  }, []);
+  }, [isLoggedIn, user_id]);
 
   return (
     <>
