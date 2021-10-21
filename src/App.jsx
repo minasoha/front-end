@@ -32,7 +32,9 @@ const App = () => {
           <PrivateRoute path="/dashboard">
             <WithNav component={<DashboardPage />} />
           </PrivateRoute>
-          <Route path="/login" component={LoginPage} />
+          <Route path="/login">
+            {isLoggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
+          </Route>
           <Route exact path="/">
             {isLoggedIn ? <Redirect to="/dashboard" /> : <CoverPage />}
           </Route>
