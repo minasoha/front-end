@@ -160,7 +160,7 @@ export const SignupForm = () => {
         <input
           name="confirmPassword"
           value={formValues.confirmPassword}
-          type="text"
+          type="password"
           placeholder="Re-enter your password."
           onChange={handleChange}
           className="form__text-field"
