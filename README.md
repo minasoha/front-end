@@ -8,12 +8,14 @@ This program will allow you to make an account and log in to a web app designed 
 
 How to use this application:
 
-1. Sign up with username, email (doesn't need a real email address), and password.
-2. Once you make an account, you need to log in.
-3. From the dashboard, click on "Create New Potluck" to organize an event.
-4. Once you submit, you will be redirected to the dashboard, where you should see the new event.
-5. As an organizer, you can request items to be brought and invite users via their username (but cannot remove guests/items).
-6. People who have accounts that have been invited to a potluck can view the event details from their dashboard, and can see attendees and items that are needed.
+1. Clone this repository, and run `npm install` then `npm start` from your local copy.
+  - At the time of posting, this is a live demo of the site: https://front-end-sigma-jet.vercel.app/
+2. Sign up with username, email (doesn't need a real email address), and password.
+3. Once you make an account, you need to log in.
+4. From the dashboard, click on "Create New Potluck" to organize an event.
+5. Once you submit, you will be redirected to the dashboard, where you should see the new event.
+6. As an organizer, you can request items to be brought and invite users via their username (but cannot remove guests/items).
+7. People who have accounts that have been invited to a potluck can view the event details from their dashboard, and can see attendees and items that are needed.
 
 ---
 
