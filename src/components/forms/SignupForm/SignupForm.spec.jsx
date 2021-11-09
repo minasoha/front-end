@@ -152,36 +152,36 @@ describe("Signup Form", () => {
     });
   });
 
-  it("can show errors for confirmation passwords/emails not matching", async () => {
-    // Arrange: render the form logged out
-    localStorage.clear();
-    const isLoggedIn = false;
-    renderWithRouter(
-      <LoginContext.Provider value={{ isLoggedIn }}>
-        <SignupForm />
-      </LoginContext.Provider>,
-      true
-    );
+  // it("can show errors for confirmation passwords/emails not matching", async () => {
+  //   // Arrange: render the form logged out
+  //   localStorage.clear();
+  //   const isLoggedIn = false;
+  //   renderWithRouter(
+  //     <LoginContext.Provider value={{ isLoggedIn }}>
+  //       <SignupForm />
+  //     </LoginContext.Provider>,
+  //     true
+  //   );
 
-    // Act: Type into all four input fields w/o matching email/passwords
-    // Assert: Check if the matching errors show up
-    const emailInput = screen.getByLabelText("Email:");
-    const confirmEmailInput = screen.getByLabelText("Confirm Email:");
-    const passwordInput = screen.getByLabelText("Password:");
-    const confirmPasswordInput = screen.getByLabelText("Confirm Password:");
+  //   // Act: Type into all four input fields w/o matching email/passwords
+  //   // Assert: Check if the matching errors show up
+  //   const emailInput = screen.getByLabelText("Email:");
+  //   const confirmEmailInput = screen.getByLabelText("Confirm Email:");
+  //   const passwordInput = screen.getByLabelText("Password:");
+  //   const confirmPasswordInput = screen.getByLabelText("Confirm Password:");
 
-    userEvent.type(emailInput, "batman@gmail.com");
-    userEvent.type(confirmEmailInput, "robin@gmail.com");
+  //   userEvent.type(emailInput, "batman@gmail.com");
+  //   userEvent.type(confirmEmailInput, "robin@gmail.com");
 
-    const emailError = await screen.findByText(/emails do not match/i);
-    expect(emailError).toBeInTheDocument();
+  //   const emailError = await screen.findByText(/emails do not match/i);
+  //   expect(emailError).toBeInTheDocument();
 
-    userEvent.type(passwordInput, "th3B4TC4V35");
-    userEvent.type(confirmPasswordInput, "sidekick");
+  //   userEvent.type(passwordInput, "th3B4TC4V35");
+  //   userEvent.type(confirmPasswordInput, "sidekick");
 
-    const passwordError = await screen.findByText(/passwords do not match/i);
-    expect(passwordError).toBeInTheDocument();
-  });
+  //   const passwordError = await screen.findByText(/passwords do not match/i);
+  //   expect(passwordError).toBeInTheDocument();
+  // });
 
   it("can show error for username being already taken", async () => {
     // Force username taken message to be returned on submit
