@@ -4,11 +4,13 @@ import { LoginContext } from "./../../../contexts";
 
 export const Navbar = () => {
   const { push } = useHistory();
-  const { setIsLoggedIn } = useContext(LoginContext);
+  const { setIsLoggedIn, setUser_id } = useContext(LoginContext);
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
     setIsLoggedIn(false);
+    setUser_id(null);
     push("/login");
   };
 

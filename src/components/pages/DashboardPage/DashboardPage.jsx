@@ -1,17 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Popup } from "../JoinPotluckPage/JoinPotluckPage";
-export const DashboardPage = () => {
-  const [popup, setPopup] = useState(false);
+import { PotluckCard } from "./../../elements";
+import { axiosWithAuth } from "./../../../utilities";
+import { LoginContext } from "./../../../contexts";
 
-  const openPopup = () => {
-    setPopup((popup) => !popup);
-  };
+export const DashboardPage = () => {
+  const { user_id, setUser_id, isLoggedIn, setIsLoggedIn } =
+    useContext(LoginContext);
+  const [userPotlucks, setUserPotlucks] = useState([]);
+
+  useEffect(() => {
+    axiosWithAuth()
+      .get(
+        `https://potluckplanner-bw-10-2021.herokuapp.com/api/potluck/${user_id}`
+      )
+      .then((response) => {
+        console.log(response);
+        setUserPotlucks(response.data);
+      })
+      .catch((error) => {
+        console.error("could not fetch potlucks:", error);
+      });
+  }, [user_id]);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+      setUser_id(localStorage.getItem("user_id"));
+    }
+  }, [isLoggedIn, user_id]);
 
   return (
     <section data-testid="dashboard" className="dashboard">
       <h1 className="dashboard__title">Dashboard</h1>
-
       <Link
         to="/potluck/create"
         data-testid="dashboard__button--create"
@@ -19,51 +40,11 @@ export const DashboardPage = () => {
       >
         Create New Potluck
       </Link>
-      <button
-        data-testid="dashboard__button--join"
-        className="button"
-        onClick={openPopup}
-      >
-        Join Potluck
-      </button>
-      <Popup popup={popup} setPopup={setPopup} />
-      {/* The below is placeholder code until we have a working system! */}
 
       <h2 className="dashboard__subtitle">Your Potlucks</h2>
-
-      {/* These cards are prime for refactoring! */}
-      {/* They should be their own component */}
-
-      <div className="potluck-card">
-        <h3 className="potluck-card__title">Potluck 1</h3>
-        <Link
-          to="/potluck/view/1"
-          data-testid="dashboard__button--view"
-          className="button"
-        >
-          View
-        </Link>
-      </div>
-      <div className="potluck-card">
-        <h3 className="potluck-card__title">Potluck 2</h3>
-        <Link
-          to="/potluck/view/2"
-          data-testid="dashboard__button--view"
-          className="button"
-        >
-          View
-        </Link>
-      </div>
-      <div className="potluck-card">
-        <h3 className="potluck-card__title">Potluck 3</h3>
-        <Link
-          to="/potluck/view/3"
-          data-testid="dashboard__button--view"
-          className="button"
-        >
-          View
-        </Link>
-      </div>
+      {userPotlucks.map((potluck) => {
+        return <PotluckCard potluck={potluck} />;
+      })}
     </section>
   );
 };

@@ -1,38 +1,48 @@
-import React, { useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import {
   CoverPage,
   LoginPage,
   DashboardPage,
   CreatePotluckPage,
+  ViewPage,
 } from "./components/pages";
-import { WithNav } from "./components/elements";
+import { WithNav, PrivateRoute } from "./components/elements";
 import { LoginContext } from "./contexts";
-import { PrivateRoute } from "./components/elements";
 
 const App = () => {
   const { Provider } = LoginContext;
 
   // If there's a login token saved in localStorage, start app logged-in
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("token") === true
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user_id, setUser_id] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+      setUser_id(localStorage.getItem("user_id"));
+    }
+  }, [isLoggedIn, user_id]);
 
   return (
     <>
-      <Provider
-        value={{ isLoggedIn, setIsLoggedIn, isLoggingIn, setIsLoggingIn }}
-      >
+      <Provider value={{ isLoggedIn, setIsLoggedIn, user_id, setUser_id }}>
         <Switch>
+          <PrivateRoute path="/potluck/view/:organizer/:potluck_id">
+            <WithNav component={<ViewPage />} />
+          </PrivateRoute>
           <PrivateRoute path="/potluck/create">
             <WithNav component={<CreatePotluckPage />} />
           </PrivateRoute>
           <PrivateRoute path="/dashboard">
             <WithNav component={<DashboardPage />} />
           </PrivateRoute>
-          <Route path="/login" component={LoginPage} />
-          <Route exact path="/" component={CoverPage} />
+          <Route path="/login">
+            {isLoggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
+          </Route>
+          <Route exact path="/">
+            {isLoggedIn ? <Redirect to="/dashboard" /> : <CoverPage />}
+          </Route>
         </Switch>
       </Provider>
     </>
